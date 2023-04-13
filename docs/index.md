@@ -1,6 +1,6 @@
-<img src="docs/img/retractable-logo.png" width=250>
+<img src="img/retractable-logo.png" width=250>
 
 Did they remove that?
-[data](data/retracted.json)
+[data](../data/retracted.json)
 
 work in progress...
