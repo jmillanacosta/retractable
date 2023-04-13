@@ -26,9 +26,9 @@ for ((j=0; j<$num_requests; j++)); do
   if [ "$cursor_mark" == "null" ]; then
     break
   fi
-  
-  echo "," >> "$output_file"
-  
+  if [ $j -ne 0 ]; then
+    echo "," >> "$output_file"
+  fi
   echo "Request $j"
   response=$(curl -X GET --header 'Accept: application/json' "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=PUB_TYPE%3A%22retraction%20of%20publication%22&resultType=idlist&cursorMark=$cursor_mark&pageSize=$page_size&format=json")
   echo "$response" | jq '.resultList.result[]' >> "$output_file"
