@@ -3,7 +3,6 @@ package io.github.jmillanacosta.retractable.utils;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.net.URL;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
@@ -15,9 +14,9 @@ import io.github.jmillanacosta.retractable.classes.RetractedArticle;
 
 
 public class JsonUtils {
-    public static JsonArray openJson() throws IOException {
+    public static JsonArray openJson(String filepath) throws IOException {
         Gson gson = new Gson();
-        Reader reader = new FileReader("data/retracted.json");
+        Reader reader = new FileReader(filepath);
         JsonElement json = gson.fromJson(reader, JsonElement.class);
         JsonArray JsonArray = json.getAsJsonArray();
         reader.close();
@@ -31,30 +30,29 @@ public class JsonUtils {
             RetractedArticle retractedArticle = new RetractedArticle();
             String source = jsonObject.get("source").getAsString();
             String source_id = jsonObject.get("id").getAsString();
-            String url = "https://europepmc.org/article/" + source + "/" + source_id;
+            // TODO String url = "https://europepmc.org/article/" + source + "/" + source_id;
             JsonElement pmcid_el = jsonObject.get("pmcid");
-            //if (!pmcid_el.isJsonNull()) {
-            //    String pmcid = pmcid_el.getAsString();
-            //    retractedArticle.setPmcId(pmcid);
-            //}
-            //JsonElement hasFullText = jsonObject.get("fullTextIdList");
-            //TODO: if (!hasFullText.isJsonNull()) {
-            //    String fullTextId = hasFullText.getAsJsonObject().getAsString();
-                
-            //    String fullTextXMLBase = "https://www.ebi.ac.uk/europepmc/webservices/rest/%s/fullTextXML"; 
-            //    String fullTextXML = String.format(fullTextXMLBase, fullTextId);
-            //}
+            try{
+                if (pmcid_el != null) {
+                    retractedArticle.setPmcId(pmcid_el.getAsString());
+                    retractedArticle.setArticleFullText();
+                    retractedArticle.setRetractionReason();
+                } else {
+                    // TODO handle the case where pmcid_el is null
+                } } catch (IndexOutOfBoundsException e) {
+                    // TODO handle the IndexOutOfBoundsException here
+                }
+            
             String id = source + source_id;
             retractedArticle.setId(id);
-            retractedArticle.setURL(url); //TODO set url
-            retractedArticle.setArticleAbstract(""); //TODO set abstract
-            retractedArticle.setRetractionReason(); //TODO set retraction reason
+            //retractedArticle.setURL(url); //TODO set url
 
             
         }
     
         return retractedArticles;
     }
+
 
    
 }

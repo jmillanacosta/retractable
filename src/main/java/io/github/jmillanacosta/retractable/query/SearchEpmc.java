@@ -18,7 +18,6 @@ public class SearchEpmc {
 
     public static JsonObject streamToJson(String query, String url, String cursorMark, int pageSize) throws Exception{
         String url_formatted = String.format(url, query, cursorMark, pageSize);
-        System.out.println(url_formatted);
         URL obj = new URL(url_formatted);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
