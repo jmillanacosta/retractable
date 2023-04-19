@@ -26,3 +26,12 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+  # Commit and push
+    - name: Commit OWL files
+      run: |
+        git add data/*
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -m "Actions - data updated" data/*
+        git push -f
+  
