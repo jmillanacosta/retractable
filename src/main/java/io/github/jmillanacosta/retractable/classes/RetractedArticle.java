@@ -7,11 +7,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import io.github.jmillanacosta.retractable.utils.RetractReasonMatcher;
+import io.github.jmillanacosta.retractable.utils.EuropePMC.RetractReasonMatcher;
 
 
 
@@ -21,7 +23,7 @@ public class RetractedArticle {
     public String articleAbstract;
     public String articleFullText;
     public String url;
-    public String retractionReason;
+    public Map<String, String> retractionReason;
     public final static String USER_AGENT = "Mozilla/5.0";
     public final static String BASE_URL = "https://www.ebi.ac.uk/europepmc/webservices/rest/%s/fullTextXML";
 
@@ -111,13 +113,14 @@ public class RetractedArticle {
         return this.url.toString();
     }
     public void setRetractionReason(){
+        //TODO Only works for EUropePMC, should be moved to class EuropePMC/JSONUtils and make this method a switch
         // Get text if available (if PMCID is given)
         // search for i.e., keywords like "The author", "Reason for retraction"
         // TODO try to automate adding tags (author provided explanation, ethical concern... how?)
         //TODO problem-makers PMC9348390 and perhaps others are flagged as retracted but the identifier still leads to a full text. Add preliminary step to avoid parsing files that are too long? for now discard it
         //TODO compile patterns outside of the loop and put them in an ArrayList
         String text = this.articleFullText;
-
+        Map<String, String>  hit_patterns = new HashMap<String, String>();
         ArrayList<String> result = new ArrayList<String>();
         List<String> patterns = RetractReasonMatcher.readPatterns("src/main/resources/patterns.txt");
         // Iterate over the lines and match each pattern
@@ -125,7 +128,6 @@ public class RetractedArticle {
             if (text.length()<70000){
             // TODO remove the length, only temp fix for large fulltexts that i suspect are not retraction notices
             System.out.println("Looking for retraction reason in article text...");
-            System.out.println(text); //TODO remove
             for (String pattern : patterns) {
                 Pattern p = Pattern.compile(pattern);
                 Matcher m = p.matcher(text);
@@ -134,6 +136,7 @@ public class RetractedArticle {
                     String sentenceWithMatch = m.group(0);
                     //System.out.println("Sentence with match: " + sentenceWithMatch);
                     result.add(sentenceWithMatch);
+                    hit_patterns.put(pattern, sentenceWithMatch);
                 }
             }
             System.out.println("Done looking for patterns");
@@ -155,12 +158,15 @@ public class RetractedArticle {
                 }
             }
 
-            String joinedString = sb.toString();
-            if (joinedString != "") {
-                System.out.println(joinedString);
-                this.retractionReason = joinedString;
-            }else{
-                System.out.println("Could not parse the retraction reason.");
+            //String joinedString = sb.toString();
+            //if (joinedString != "") {
+            //    System.out.println(joinedString);
+            //    this.retractionReason = joinedString;
+            //}else{
+            //    System.out.println("Could not parse the retraction reason.");
+            //}
+            if (hit_patterns!=null){
+                this.retractionReason = hit_patterns;
             }
                 
             
@@ -169,7 +175,7 @@ public class RetractedArticle {
                       
     }
 
-    public String getRetractionReason(){
+    public Map<String, String> getRetractionReason(){
         return this.retractionReason;
     }
 

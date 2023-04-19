@@ -1,3 +1,6 @@
 target
 .vscode
 log
+*subset*
+log
+problem-makers.txt

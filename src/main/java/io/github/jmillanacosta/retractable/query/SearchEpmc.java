@@ -52,11 +52,10 @@ public class SearchEpmc {
         int hitCount = firstJson.get("hitCount").getAsInt();
         // Calculate the number of requests needed to retrieve all results with pageSize = 1000
         int pageSize = 1000;
-        int reqNum = (( (hitCount + pageSize - 1) / pageSize ));
-        // Make a request for each page and save to Json
-        String firstCursorMark = firstJson.get("nextCursorMark").getAsString();
+        int reqNum = (( (hitCount + pageSize) / pageSize ));
+
         JsonArray result = new JsonArray();
-        String cursorMark = firstCursorMark;
+        String cursorMark = "*";
         System.out.println(reqNum);
         for (int i = 0; i <= reqNum; i++) {
             System.out.println("Request #" + i);
@@ -76,5 +75,6 @@ public class SearchEpmc {
         }    
         return result;
    }
+   //TODO: add method that only retrieves the latest additions and adds them to the json? or always download the whole list (better if some are removed...)?
 }    
 
