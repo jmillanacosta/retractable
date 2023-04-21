@@ -1,4 +1,5 @@
 package io.github.jmillanacosta.retractable;
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ public class Retractable{
     //TODO improve reasonmatcher and the way result is delivered
     public final static String PMC_FILEPATH = "data/ePMC_retracts.json";
     public final static String DATA_FILEPATH = "data/retractable.json";
+    public final static String PMCIDS = "data/pmcids.csv";
+    public final static String IDPMCID = "data/IDPMCID.csv";
     public static void main( String[] args ) throws Exception
     {   
         
@@ -36,12 +39,19 @@ public class Retractable{
         Gson gson = new Gson();
         JsonArray jsonArray = new JsonArray();
         int i = 0;
+        ArrayList<String> pmcids = new ArrayList<String>();
+        ArrayList<String> idPmcidMap = new ArrayList<String>();
+        idPmcidMap.add("id,pmcid");
         for (RetractedArticle article : retractedArticles) {
             JsonObject articleJson = new JsonObject();
             i +=1;
             System.out.println("Processing article #" + i + article.pmcid);
             articleJson.addProperty("article", article.id != null ? article.id : "");
             articleJson.addProperty("pmcid", article.pmcid != null ? article.pmcid : "");
+            if (article.pmcid != null){
+                pmcids.add(article.pmcid);
+                idPmcidMap.add(article.id + "," + article.pmcid);
+            }
             articleJson.addProperty("url", article.url != null ? article.url : "");
             articleJson.addProperty("retraction_reason", article.retractionReason != null ? RetractReasonMatcher.convertToJson(article.retractionReason) : "");
             jsonArray.add(articleJson);
@@ -57,13 +67,42 @@ public class Retractable{
                 fileWriter.write(jsonString);
                 fileWriter.flush();
                 fileWriter.close();
+                
                 System.out.println("JSON file created");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
         
-    }
+    
+
+        // Write the ArrayList to the pmcids file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(PMCIDS))) {
+                for (String string : pmcids) {
+                    writer.write(string);
+                    writer.newLine(); // Add a new line after each string
+                }
+                System.out.println("ArrayList written to file successfully!");
+            } catch (IOException e) {
+                System.err.println("Error writing ArrayList to file: " + e.getMessage());
+                e.printStackTrace();
+            }
+        
+        
+        
+        // Write the ArrayList to the pmcid, id map file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(IDPMCID))) {
+            for (String string : idPmcidMap) {
+                writer.write(string);
+                writer.newLine(); // Add a new line after each string
+            }
+            System.out.println("ArrayList written to file successfully!");
+        } catch (IOException e) {
+            System.err.println("Error writing ArrayList to file: " + e.getMessage());
+            e.printStackTrace();
+        }
             
+            }
+        
 }
 
 
