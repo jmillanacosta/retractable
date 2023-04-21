@@ -1,0 +1,22 @@
+- invalid results:
+  - (.*?invalid results.*?[.])
+- fabrication:
+  - (.*?manipulated data.*?[.])
+  - (.*?fabricated data.*?[.])
+  - (.*?falsified data.*?[.])
+  - (.*?misrepresentation.*?[.])
+- plagiarism:
+  - (.*?plagiarism.*?[.])
+- conflict of interest:
+  - (.*?conflict of interest.*?[.])
+  - (.*?inadequate peer review.*?[.])
+- research misconduct:
+  - (.*?research misconduct.*?[.])
+  - (.*?ethical violations.*?[.])
+- author retraction:
+  - (The authors have retracted this article.*?[.])
+  - (.*?request of the authors.*?[.])
+  - (.*?request a correction.*?[.])
+- concerned reader:  
+  - (.*?Expression of Concern.*?[.])
+  - (.*concerned reader.*?[.])

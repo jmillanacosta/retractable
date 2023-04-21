@@ -30,14 +30,13 @@ public class JsonUtils {
             RetractedArticle retractedArticle = new RetractedArticle();
             String source = jsonObject.get("source").getAsString();
             String source_id = jsonObject.get("id").getAsString();
-            // TODO String url = "https://europepmc.org/article/" + source + "/" + source_id;
             JsonElement pmcid_el = jsonObject.get("pmcid");
             String id = source + source_id;
             System.out.println(String.format("_______________\nInstantiating %s",id));
             retractedArticle.setId(id);
             retractedArticles.add(retractedArticle);
             String url = String.format("https://europepmc.org/article/%s/%s", source, source_id);
-                    retractedArticle.setURL(url);
+            retractedArticle.setURL(url);
             try{
                 if (pmcid_el != null) {
                     retractedArticle.setPmcId(pmcid_el.getAsString());

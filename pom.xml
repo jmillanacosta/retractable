@@ -19,6 +19,13 @@
   </properties>
 
   <dependencies>
+
+    <dependency>
+      <groupId>com.weicoder</groupId>
+      <artifactId>yaml</artifactId>
+      <version>3.5.9</version>
+    </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

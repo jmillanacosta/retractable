@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -112,68 +113,65 @@ public class RetractedArticle {
     public String getURL() {
         return this.url.toString();
     }
-    public void setRetractionReason(){
+    public void setRetractionReason() {
         //TODO Only works for EUropePMC, should be moved to class EuropePMC/JSONUtils and make this method a switch
         // Get text if available (if PMCID is given)
         // search for i.e., keywords like "The author", "Reason for retraction"
         // TODO try to automate adding tags (author provided explanation, ethical concern... how?)
-        //TODO problem-makers PMC9348390 and perhaps others are flagged as retracted but the identifier still leads to a full text. Add preliminary step to avoid parsing files that are too long? for now discard it
         //TODO compile patterns outside of the loop and put them in an ArrayList
         String text = this.articleFullText;
-        Map<String, String>  hit_patterns = new HashMap<String, String>();
+        Map<String, String> hit_patterns = new HashMap<String, String>();
         ArrayList<String> result = new ArrayList<String>();
-        List<String> patterns = RetractReasonMatcher.readPatterns("src/main/resources/patterns.txt");
-        // Iterate over the lines and match each pattern
-        if (text != null & text!="") { 
-            if (text.length()<70000){
-            // TODO remove the length, only temp fix for large fulltexts that i suspect are not retraction notices
-            System.out.println("Looking for retraction reason in article text...");
-            for (String pattern : patterns) {
-                Pattern p = Pattern.compile(pattern);
-                Matcher m = p.matcher(text);
-                while (m.find()) {
-                    
-                    String sentenceWithMatch = m.group(0);
-                    //System.out.println("Sentence with match: " + sentenceWithMatch);
-                    result.add(sentenceWithMatch);
-                    hit_patterns.put(pattern, sentenceWithMatch);
+    
+        // Read patterns from YAML file
+        List<LinkedHashMap<String, List<String>>> patterns = RetractReasonMatcher.readPatternsFromYaml("src/main/resources/patterns.yml");
+    
+        // Iterate over the patterns and match each pattern
+        if (text != null && !text.isEmpty()) {
+            if (text.length() < 70000) {
+                // TODO remove the length, only temp fix for large fulltexts that i suspect are not retraction notices
+                System.out.println("Looking for retraction reason in article text...");
+                for (LinkedHashMap<String, List<String>> patternMap : patterns) {
+                    for (Map.Entry<String, List<String>> entry : patternMap.entrySet()) {
+                        String key = entry.getKey();
+                        List<String> patternList = entry.getValue();
+                        for (String pattern : patternList) {
+                            Pattern p = Pattern.compile(pattern);
+                            Matcher m = p.matcher(text);
+                            while (m.find()) {
+                                String sentenceWithMatch = m.group(0);
+                                result.add(sentenceWithMatch);
+                                hit_patterns.put(key, sentenceWithMatch);
+                            }
+                        }
+                    }
+                }
+                System.out.println("Done looking for patterns");
+                ArrayList<String> uniqueStrings = new ArrayList<String>(); // HashSet to keep track of unique strings
+    
+                // Add all unique strings from ArrayList to HashSet
+                for (String s : result) {
+                    uniqueStrings.add(s);
+                }
+                Collections.sort(uniqueStrings, (s1, s2) -> Integer.compare(s2.length(), s1.length()));
+    
+                System.out.println("Build the StringBuilder");
+                // Join unique strings into a single string
+                StringBuilder sb = new StringBuilder();
+                for (String s : uniqueStrings) {
+                    if (sb.indexOf(s) == -1) { // check if the string is not already present in the StringBuilder
+                        sb.append(s);
+                        sb.append(" "); // add a space separator between each unique string
+                    }
+                }
+    
+                if (!hit_patterns.isEmpty()) {
+                    this.retractionReason = hit_patterns;
                 }
             }
-            System.out.println("Done looking for patterns");
-            ArrayList<String> uniqueStrings = new ArrayList<String>(); // HashSet to keep track of unique strings
-
-            // Add all unique strings from ArrayList to HashSet
-            for (String s : result) {
-                uniqueStrings.add(s);
-            }
-            Collections.sort(uniqueStrings, (s1, s2) -> Integer.compare(s2.length(), s1.length()));
-            
-            System.out.println("Build the StringBuilder");
-            // Join unique strings into a single string
-            StringBuilder sb = new StringBuilder();
-            for (String s : uniqueStrings) {
-                if (sb.indexOf(s) == -1) { // check if the string is not already present in the StringBuilder
-                    sb.append(s);
-                    sb.append(" "); // add a space separator between each unique string
-                }
-            }
-
-            //String joinedString = sb.toString();
-            //if (joinedString != "") {
-            //    System.out.println(joinedString);
-            //    this.retractionReason = joinedString;
-            //}else{
-            //    System.out.println("Could not parse the retraction reason.");
-            //}
-            if (hit_patterns!=null){
-                this.retractionReason = hit_patterns;
-            }
-                
-            
-        }}
-
-                      
+        }
     }
+    
 
     public Map<String, String> getRetractionReason(){
         return this.retractionReason;

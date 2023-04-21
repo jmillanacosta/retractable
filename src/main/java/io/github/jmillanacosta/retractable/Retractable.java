@@ -4,19 +4,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import io.github.jmillanacosta.retractable.classes.RetractedArticle;
 import io.github.jmillanacosta.retractable.query.SearchEpmc;
 import io.github.jmillanacosta.retractable.utils.EuropePMC.JsonUtils;
-
+import io.github.jmillanacosta.retractable.utils.EuropePMC.RetractReasonMatcher;
 public class Retractable{
     //TODO: clean up main class and move code to the adequate classes
     //TODO: creates Derby database and sets up a webservice/API endpoint
     //TODO: add more sources/services besides EuropePMC, ask around
     //TODO: method to retrieve only new additions to the .json/future relational db
+    //TODO improve reasonmatcher and the way result is delivered
     public final static String PMC_FILEPATH = "data/ePMC_retracts.json";
     public final static String DATA_FILEPATH = "data/retractable.json";
     public static void main( String[] args ) throws Exception
@@ -30,7 +30,6 @@ public class Retractable{
         file.write(resultEPmcQuery.toString());
         //System.out.println("Successfully wrote JSON array to file.");
         file.close();
-        //TODO only a temporary pipeline of course
         JsonArray queriedEPmc = JsonUtils.openJson(PMC_FILEPATH);
         ArrayList<RetractedArticle> retractedArticles = JsonUtils.instantiateRetractedArticles(queriedEPmc);
        
@@ -40,11 +39,11 @@ public class Retractable{
         for (RetractedArticle article : retractedArticles) {
             JsonObject articleJson = new JsonObject();
             i +=1;
-            System.out.println(article.pmcid);
+            System.out.println("Processing article #" + i + article.pmcid);
             articleJson.addProperty("article", article.id != null ? article.id : "");
             articleJson.addProperty("pmcid", article.pmcid != null ? article.pmcid : "");
             articleJson.addProperty("url", article.url != null ? article.url : "");
-            articleJson.addProperty("retraction_reason", article.retractionReason != null ? article.retractionReason.toString() : "");
+            articleJson.addProperty("retraction_reason", article.retractionReason != null ? RetractReasonMatcher.convertToJson(article.retractionReason) : "");
             jsonArray.add(articleJson);
 }
         JsonObject json = new JsonObject();

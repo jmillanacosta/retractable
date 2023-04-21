@@ -1,41 +1,41 @@
 package io.github.jmillanacosta.retractable.utils.EuropePMC;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.FileInputStream;
+import org.yaml.snakeyaml.Yaml;
 
-//TODO for now it's grabbing (almost) the whole <body> for al XMLs. Future: use patterns to classify the outputs
+import com.google.gson.Gson;
 public class RetractReasonMatcher {
-    public static Map<String, String> retractReasonMatcher(String response, String patternFilepath) {
-        List<String> patterns = readPatterns(patternFilepath);
-        Map<String, String>  hit_patterns = new HashMap<String, String>();
-        // Iterate over the lines and match each pattern
-        if (response != null) {
-            for (String pattern : patterns) {
-                Pattern p = Pattern.compile(pattern + "\\b.*?");
-                Matcher m = p.matcher(response);
-                while (m.find()) {
-                    String sentenceWithMatch = m.group(1);
-                    System.out.println("Sentence with match: " + sentenceWithMatch);
-                    hit_patterns.put(pattern, sentenceWithMatch);
-                }
-            }
-        }
-        return hit_patterns;
-    }
-    
-    
-        
-        //return result;
-    
+  
+    public static List<LinkedHashMap<String, List<String>>> readPatternsFromYaml(String fileName) {
+        List<LinkedHashMap<String, List<String>>> patternsList = null;
 
+        try {
+            File file = new File(fileName);
+            InputStream inputStream = new FileInputStream(file);
+
+            // Load YAML file
+            Yaml yaml = new Yaml();
+            patternsList = yaml.load(inputStream);
+
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return patternsList;
+    }
+
+    
     public static List<String> splitIntoLines(String text) {
         List<String> lines = new ArrayList<>();
         String[] split = text.split("\\r?\\n");
@@ -62,6 +62,14 @@ public class RetractReasonMatcher {
             e.printStackTrace();
         }
         return patterns;
+    }
+
+
+    // Convert LinkedHashMap to JSON using Gson
+    public static String convertToJson(Map<String, String> retractionReason) {
+        Gson gson = new Gson();
+        String json = gson.toJson(retractionReason);
+        return json;
     }
 }
 
