@@ -25,9 +25,6 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-        
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
     - name: Run retractable
       run: |
         mvn clean compile assembly:single
