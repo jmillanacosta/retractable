@@ -31,7 +31,7 @@ jobs:
         mvn clean compile assembly:single
         java -cp target/retractable-1.0-jar-with-dependencies.jar io.github.jmillanacosta.retractable.Retractable
   # Commit and push
-    - name: Commit OWL files
+    - name: Commit data files
       run: |
         git add data/*
         git config --local user.email "action@github.com"
