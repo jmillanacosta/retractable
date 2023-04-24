@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 jobs:
   get_data:
-
+    name: Get data
     runs-on: ubuntu-latest
     permissions: write-all
 
@@ -24,16 +24,9 @@ jobs:
     - name: Run retractable
       run: |
         mvn clean compile assembly:single
-        java -cp target/retractable-1.0-jar-with-dependencies.jar io.github.jmillanacosta.retractable.Retractable
-    - name: Commit data files
-      run: |
-        git add data/* 
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git commit -m "Actions - data updated" data/*
-        git push -f
+        
   run_notebook:
-    name: Run notebooks and commit changezs
+    name: Run notebooks and commit changes
     needs: get_data
     runs-on: ubuntu-latest
     steps:
