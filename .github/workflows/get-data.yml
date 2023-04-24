@@ -29,6 +29,14 @@ jobs:
       run: |
         mvn clean compile assembly:single
         java -cp target/retractable-1.0-jar-with-dependencies.jar io.github.jmillanacosta.retractable.Retractable
+    # Commit and push
+    - name: Commit data files
+      run: |
+        git add data/* 
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -m "Actions - data updated" data/*
+        git push -f
   notebooks:
     runs-on: ubuntu-latest
     needs: get_data
@@ -45,13 +53,13 @@ jobs:
         notebook: "notebooks/*.ipynb"
     - name: Notebooks to markdown
       run: |
-        jupyter nbconvert --to markdown notebooks/*.ipynb
+        jupyter nbconvert --to markdown notebooks/00_basic_stats.ipynb
   # Commit and push
     - name: Commit data files
       run: |
-        find . -name "notebooks/*.md" -exec mv '{}' docs/ \;
-        git add data/* notebooks/* docs/*
+        cp notebooks/00_basic_stats.md docs/basic_stats.md
+        git add notebooks/* docs/*
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git commit -m "Actions - data updated" data/* notebooks/* docs/*
+        git commit -m "Actions - notebooks updated" notebooks/* docs/*
         git push -f
