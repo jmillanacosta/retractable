@@ -70,7 +70,7 @@ public class RetractedArticle {
             // handle non 200 range responses
             if (responseCode < 200 || responseCode >= 300) {
                 System.out.println("Failed to retrieve data. Response code: " + responseCode);
-                
+               
             } else {
                 InputStream inputStream = con.getInputStream();
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
@@ -169,6 +169,11 @@ public class RetractedArticle {
                     this.retractionReason = hit_patterns;
                 }
             }
+        }else{
+            Map<String, String> reason_unavailable = new HashMap<String, String>();
+            reason_unavailable.put("unavailable", "");
+            this.retractionReason = reason_unavailable;
+
         }
     }
     

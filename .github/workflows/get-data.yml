@@ -1,5 +1,3 @@
-# This workflow will build the Java project with Maven, and run the main class
-
 name: Get data
 
 on:
@@ -29,7 +27,6 @@ jobs:
       run: |
         mvn clean compile assembly:single
         java -cp target/retractable-1.0-jar-with-dependencies.jar io.github.jmillanacosta.retractable.Retractable
-    # Commit and push
     - name: Commit data files
       run: |
         git add data/* 
@@ -37,29 +34,29 @@ jobs:
         git config --local user.name "GitHub Action"
         git commit -m "Actions - data updated" data/*
         git push -f
-  notebooks:
+  run_notebook:
+    name: Run notebooks and commit changez
     runs-on: ubuntu-latest
-    needs: get_data
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python
-      uses: actions/setup-python@v3
-    - uses: yaananth/run-notebook@v2
-      env:
-        RUNNER: ${{ toJson(runner) }}
-        SECRETS: ${{ toJson(secrets) }}
-        GITHUB: ${{ toJson(github) }}
-      with:
-        notebook: "notebooks/00_basic_stats.ipynb"
-    - name: Notebooks to markdown
-      run: |
-        jupyter nbconvert --to markdown notebooks/00_basic_stats.ipynb
-  # Commit and push
-    - name: Commit data files
-      run: |
-        cp notebooks/00_basic_stats.md docs/basic_stats.md
-        git add notebooks/* docs/*
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git commit -m "Actions - notebooks updated" notebooks/* docs/*
-        git push -f
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT }}   
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+          cache: 'pip'      
+      - name: Install Dependencies
+        run: | 
+          pip install -r requirements.txt      
+      - name: Run notebook and update Markdown
+        run: |
+          jupyter nbconvert --to markdown notebooks/00_basic_stats.ipynb
+      - name: Commit and Push Changes
+        run: |
+          mv notebooks/00_basic_stats.md docs/00_basic_stats.md
+          git add notebooks/* docs/* 
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "Actions - notebooks updated" notebooks/* docs/*
+          git push -f

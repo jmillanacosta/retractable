@@ -46,10 +46,11 @@ public class Retractable{
         ArrayList<String> ids = new ArrayList<String>();
 
         idPmcidMap.add("id,pmcid");
+        int articleNumber = retractedArticles.size(); 
         for (RetractedArticle article : retractedArticles) {
             JsonObject articleJson = new JsonObject();
             i +=1;
-            System.out.println("Processing article #" + i + article.pmcid);
+            System.out.println("Writing data for article " + i + " of " + articleNumber + ": " + article.pmcid);
             articleJson.addProperty("article", article.id != null ? article.id : "");
             articleJson.addProperty("pmcid", article.pmcid != null ? article.pmcid : "");
             if (article.pmcid != null){

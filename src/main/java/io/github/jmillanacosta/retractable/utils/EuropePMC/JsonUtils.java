@@ -31,14 +31,13 @@ public class JsonUtils {
             String source = jsonObject.get("source").getAsString();
             String source_id = jsonObject.get("id").getAsString();
             JsonElement pmcid_el = jsonObject.get("pmcid");
-            if (source!="PMC"){
+            if (!source.contains("PMC")){
                 String id = source + source_id;
                 retractedArticle.setId(id);
-                System.out.println(String.format("_______________\nInstantiating %s",id));
+                System.out.println(String.format("_______________\nInstantiating %s",retractedArticle.id));
             }else{
-                String id = source_id;
-                retractedArticle.setId(id);
-                System.out.println(String.format("_______________\nInstantiating %s",id));
+                retractedArticle.setId(source_id);
+                System.out.println(String.format("_______________\nInstantiating %s",retractedArticle.id));
             }
             retractedArticles.add(retractedArticle);
             String url = String.format("https://europepmc.org/article/%s/%s", source, source_id);
@@ -49,9 +48,9 @@ public class JsonUtils {
                     retractedArticle.setArticleFullText();
                     retractedArticle.setRetractionReason();
                 } else {
-                    // TODO
+                    // TODO when no retraction reason provided
                 } } catch (IndexOutOfBoundsException e) {
-                    // TODO
+                    // TODO catch exception
                 }
             
 

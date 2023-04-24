@@ -1,22 +1,55 @@
 - invalid results:
   - (.*?invalid results.*?[.])
-- fabrication:
+- plagiarism:
+  - (.*?plagiarism.*?[.])
+  - (.*?unattributed.*?[.])
+- conflict of interest:
+  - (.*?conflict of interest.*?[.])
+  - (.*?inadequate peer review.*?[.])
+- research misconduct and data manipulation:
+  - (.*?misconduct.*?[.])
+  - (.*?ethical.*?[.])
+  - (.?ethics*?[.])
   - (.*?manipulated data.*?[.])
   - (.*?fabricated data.*?[.])
   - (.*?falsified data.*?[.])
   - (.*?misrepresentation.*?[.])
-- plagiarism:
-  - (.*?plagiarism.*?[.])
-- conflict of interest:
-  - (.*?conflict of interest.*?[.])
-  - (.*?inadequate peer review.*?[.])
-- research misconduct:
-  - (.*?research misconduct.*?[.])
-  - (.*?ethical violations.*?[.])
-- author retraction:
+  - (.*fabrication.*?[.])
+  - (.*?genuine.*?[.])
+  - (.*?reliable.*?[.])
+  - (.*?validity.*?[.])
+- author agreement or retraction:
   - (The authors have retracted this article.*?[.])
   - (.*?request of the authors.*?[.])
   - (.*?request a correction.*?[.])
+  - (.*retracted by the authors*?[.])
+  - (.*authors retract*?[.])
+  - (.*?agreement of the authors*?[.])
+  - (.*?author’s request*?[.])
 - concerned reader:  
   - (.*?Expression of Concern.*?[.])
-  - (.*concerned reader.*?[.])
+  - (.*concern.*?[.])
+- funding and legal issues:
+  - (.?legal*?[.])
+  - (.?copyright*?[.])
+  - (.?lawsuit*?[.])
+  - (.?undisclosed funding*?[.])
+  - (.?funding disclosure*?[.])
+- issues with figures:
+  - (.?image manipulation*?[.])
+  - (.?figure*?[.])
+  - (.?tampered*?[.])
+  - (.?figure manipulation*?[.])
+  - (.?fabricated figure*?[.])
+  - (.?fabricated image*?[.])
+- authorship:
+  - (.?authorship*?[.])
+  - (.?attribution*?[.])
+- duplication:
+  - (.?duplication*?[.])
+  - (.?duplicate*?[.])
+  - (.?published elsewhere*?[.])
+  - (.?published previously*?[.])
+- reproducibility:
+  - (.?could not be reproduced*?[.])
+  - (.?reproducibility*?[.])
