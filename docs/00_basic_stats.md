@@ -143,11 +143,11 @@ percentage_notice = round(len_notice/len_data*100, 2)
 retrieved = df[df['retraction_reason'] != ""]
 percentage_retrieved = round(len(retrieved)/len_data*100,2)
 print(f"{percentage_notice}% of retracted articles in Europe PMC articles ({len_notice} out of {len_data}) have an associated retraction notice PMC id from which to extract retraction reasons.")
-print(f"{percentage_retrieved}% of retraction reasons identified for retracted articles in Europe PMC articles ({len(retrieved)} out of {len_data}).")
+print(f"{percentage_retrieved}% of retraction reasons identified for retracted articles in Europe PMC articles ({len(retrieved)} out of {len_notice}).")
 ```
 
     46.98% of retracted articles in Europe PMC articles (6811 out of 14499) have an associated retraction notice PMC id from which to extract retraction reasons.
-    5.46% of retraction reasons identified for retracted articles in Europe PMC articles (791 out of 14499).
+    35.37% of retraction reasons identified for retracted articles in Europe PMC articles (5128 out of 6811).
 
 
 Which retraction reasons?
