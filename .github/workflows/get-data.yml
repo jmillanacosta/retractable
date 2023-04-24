@@ -11,7 +11,7 @@ on:
     - cron: "0 9 * * MON"
   workflow_dispatch:
 jobs:
-  build:
+  get_data:
 
     runs-on: ubuntu-latest
     permissions: write-all
@@ -29,12 +29,29 @@ jobs:
       run: |
         mvn clean compile assembly:single
         java -cp target/retractable-1.0-jar-with-dependencies.jar io.github.jmillanacosta.retractable.Retractable
+  notebooks:
+    runs-on: ubuntu-latest
+    needs: get_data
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v3
+    - uses: yaananth/run-notebook@v2
+      env:
+        RUNNER: ${{ toJson(runner) }}
+        SECRETS: ${{ toJson(secrets) }}
+        GITHUB: ${{ toJson(github) }}
+      with:
+        notebook: "notebooks/*.ipynb"
+    - name: Notebooks to markdown
+      run: |
+        jupyter nbconvert --to markdown notebooks/*.ipynb
   # Commit and push
     - name: Commit data files
       run: |
-        git add data/*
+        find . -name "notebooks/*.md" -exec mv '{}' docs/ \;
+        git add data/* notebooks/* docs/*
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git commit -m "Actions - data updated" data/*
+        git commit -m "Actions - data updated" data/* notebooks/* docs/*
         git push -f
-  
