@@ -50,7 +50,7 @@ jobs:
         SECRETS: ${{ toJson(secrets) }}
         GITHUB: ${{ toJson(github) }}
       with:
-        notebook: "notebooks/*.ipynb"
+        notebook: "notebooks/00_basic_stats.ipynb"
     - name: Notebooks to markdown
       run: |
         jupyter nbconvert --to markdown notebooks/00_basic_stats.ipynb
