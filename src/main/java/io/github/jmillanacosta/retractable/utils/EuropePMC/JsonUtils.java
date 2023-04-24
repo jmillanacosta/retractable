@@ -31,9 +31,15 @@ public class JsonUtils {
             String source = jsonObject.get("source").getAsString();
             String source_id = jsonObject.get("id").getAsString();
             JsonElement pmcid_el = jsonObject.get("pmcid");
-            String id = source + source_id;
-            System.out.println(String.format("_______________\nInstantiating %s",id));
-            retractedArticle.setId(id);
+            if (source!="PMC"){
+                String id = source + source_id;
+                retractedArticle.setId(id);
+                System.out.println(String.format("_______________\nInstantiating %s",id));
+            }else{
+                String id = source_id;
+                retractedArticle.setId(id);
+                System.out.println(String.format("_______________\nInstantiating %s",id));
+            }
             retractedArticles.add(retractedArticle);
             String url = String.format("https://europepmc.org/article/%s/%s", source, source_id);
             retractedArticle.setURL(url);

@@ -22,6 +22,8 @@ public class Retractable{
     public final static String DATA_FILEPATH = "data/retractable.json";
     public final static String PMCIDS = "data/pmcids.csv";
     public final static String IDPMCID = "data/IDPMCID.csv";
+    public final static String IDS = "data/ids.csv";
+
     public static void main( String[] args ) throws Exception
     {   
         
@@ -41,6 +43,8 @@ public class Retractable{
         int i = 0;
         ArrayList<String> pmcids = new ArrayList<String>();
         ArrayList<String> idPmcidMap = new ArrayList<String>();
+        ArrayList<String> ids = new ArrayList<String>();
+
         idPmcidMap.add("id,pmcid");
         for (RetractedArticle article : retractedArticles) {
             JsonObject articleJson = new JsonObject();
@@ -52,6 +56,7 @@ public class Retractable{
                 pmcids.add(article.pmcid);
                 idPmcidMap.add(article.id + "," + article.pmcid);
             }
+            ids.add(article.id);
             articleJson.addProperty("url", article.url != null ? article.url : "");
             articleJson.addProperty("retraction_reason", article.retractionReason != null ? RetractReasonMatcher.convertToJson(article.retractionReason) : "");
             jsonArray.add(articleJson);
@@ -87,6 +92,18 @@ public class Retractable{
                 e.printStackTrace();
             }
         
+        // Write the ArrayList to the pmcids file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter  (IDS))) {
+            for (String string : ids) {
+                writer.write(string);
+                writer.newLine(); // Add a new line after each string
+            }
+            System.out.println("ArrayList written to file successfully!");
+        } catch (IOException e) {
+            System.err.println("Error writing ArrayList to file: " + e. getMessage());
+            e.printStackTrace();
+        }
+
         
         
         // Write the ArrayList to the pmcid, id map file
