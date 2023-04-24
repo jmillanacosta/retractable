@@ -4,6 +4,6 @@ The data queried from ePMC will be programatically updated to [retracted.json](h
 
 The data with retracted reason added is under [retractable.json](https://raw.githubusercontent.com/jmillanacosta/retractable/main/data/retractable.json).
 
-Some stats available under [basic_stats](/00_basic_stats)
+Some stats available under [basic_stats](/retractable/00_basic_stats)
 
 work in progress...
