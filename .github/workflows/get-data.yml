@@ -35,7 +35,8 @@ jobs:
         git commit -m "Actions - data updated" data/*
         git push -f
   run_notebook:
-    name: Run notebooks and commit changez
+    name: Run notebooks and commit changezs
+    needs: get_data
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
