@@ -45,7 +45,7 @@ Flask==2.2.2
 Flask-Compress==1.13
 flit_core @ file:///home/conda/feedstock_root/build_artifacts/flit-core_1667734568827/work/source/flit_core
 fonttools==4.37.3
-future==0.18.3
+future==0.18.2
 gcd==0.1.0
 generateDS==2.41.1
 graphviz==0.20.1
