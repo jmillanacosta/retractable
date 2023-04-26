@@ -31,7 +31,8 @@ public class JsonUtils {
             String source = jsonObject.get("source").getAsString();
             String source_id = jsonObject.get("id").getAsString();
             JsonElement pmcid_el = jsonObject.get("pmcid");
-            if (!source.contains("PMC")){
+            
+            if (!Character.isLetter(source_id.charAt(0))){
                 String id = source + source_id;
                 retractedArticle.setId(id);
                 System.out.println(String.format("_______________\nInstantiating %s",retractedArticle.id));
