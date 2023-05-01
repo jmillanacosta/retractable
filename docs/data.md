@@ -1,5 +1,5 @@
 This page gives a table view of the [retracted paper data](data/retractable.json) as an html table.
-
+<html>
     <script>
           let retractable;
 
@@ -37,3 +37,4 @@ This page gives a table view of the [retracted paper data](data/retractable.json
         document.body.appendChild(table);
       }
     </script>
+</html>
