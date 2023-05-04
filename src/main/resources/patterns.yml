@@ -29,6 +29,7 @@
 - concerned reader:  
   - (.*?Expression of Concern.*?[.])
   - (.*concern.*?[.])
+  - (.*raised by readers.*?[.])
 - funding and legal issues:
   - (.?legal*?[.])
   - (.?copyright*?[.])
@@ -47,7 +48,7 @@
   - (.?attribution*?[.])
 - duplication:
   - (.?duplication*?[.])
-  - (.?duplicate*?[.])
+  - (.?duplic*[.])
   - (.?published elsewhere*?[.])
   - (.?published previously*?[.])
 - reproducibility:

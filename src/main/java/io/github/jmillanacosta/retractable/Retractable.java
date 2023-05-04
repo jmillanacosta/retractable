@@ -61,6 +61,7 @@ public class Retractable{
             articleJson.addProperty("url", article.url != null ? article.url : "");
             articleJson.addProperty("retraction_reason", article.retractionReason != null ? RetractReasonMatcher.convertToJson(article.retractionReason) : "");
             jsonArray.add(articleJson);
+            articleJson.addProperty("retraction_body", article.articleFullText != null ? article.articleFullText : "");
 }
         JsonObject json = new JsonObject();
         // Add the jsonArray to the root json object
@@ -93,7 +94,7 @@ public class Retractable{
                 e.printStackTrace();
             }
         
-        // Write the ArrayList to the pmcids file
+        // Write the ArrayList to the ids file
         try (BufferedWriter writer = new BufferedWriter(new FileWriter  (IDS))) {
             for (String string : ids) {
                 writer.write(string);
