@@ -9,6 +9,9 @@ name: Lint Code Base
 on:
   push:
     branches: [ "main" ]
+    paths:
+    - src
+    - notebooks
   pull_request:
     branches: [ "main" ]
 jobs:
