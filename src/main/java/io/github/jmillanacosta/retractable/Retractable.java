@@ -60,8 +60,9 @@ public class Retractable{
             ids.add(article.id);
             articleJson.addProperty("url", article.url != null ? article.url : "");
             articleJson.addProperty("retraction_reason", article.retractionReason != null ? RetractReasonMatcher.convertToJson(article.retractionReason) : "");
-            jsonArray.add(articleJson);
             articleJson.addProperty("retraction_body", article.articleFullText != null ? article.articleFullText : "");
+            jsonArray.add(articleJson);
+
 }
         JsonObject json = new JsonObject();
         // Add the jsonArray to the root json object
