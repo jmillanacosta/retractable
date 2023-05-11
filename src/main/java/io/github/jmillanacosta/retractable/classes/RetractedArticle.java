@@ -24,7 +24,7 @@ public class RetractedArticle {
     public String articleAbstract;
     public String articleFullText;
     public String url;
-    public Map<String, String> retractionReason;
+    public ArrayList retractionReason;
     public final static String USER_AGENT = "Mozilla/5.0";
     public final static String BASE_URL = "https://www.ebi.ac.uk/europepmc/webservices/rest/%s/fullTextXML";
 
@@ -120,7 +120,7 @@ public class RetractedArticle {
         // TODO try to automate adding tags (author provided explanation, ethical concern... how?)
         //TODO compile patterns outside of the loop and put them in an ArrayList
         String text = this.articleFullText;
-        Map<String, String> hit_patterns = new HashMap<String, String>();
+        ArrayList<String> hit_patterns = new ArrayList<String>();
         ArrayList<String> result = new ArrayList<String>();
     
         // Read patterns from YAML file
@@ -141,7 +141,7 @@ public class RetractedArticle {
                             while (m.find()) {
                                 String sentenceWithMatch = m.group(0);
                                 result.add(sentenceWithMatch);
-                                hit_patterns.put(key, sentenceWithMatch);
+                                hit_patterns.add(key);
                             }
                         }
                     }
@@ -157,28 +157,28 @@ public class RetractedArticle {
     
                 System.out.println("Build the StringBuilder");
                 // Join unique strings into a single string
-                StringBuilder sb = new StringBuilder();
-                for (String s : uniqueStrings) {
-                    if (sb.indexOf(s) == -1) { // check if the string is not already present in the StringBuilder
-                        sb.append(s);
-                        sb.append(" "); // add a space separator between each unique string
-                    }
-                }
+                //StringBuilder sb = new StringBuilder();
+                //for (String s : uniqueStrings) {
+                //    if (sb.indexOf(s) == -1) { // check if the string is not already present in the StringBuilder
+                //        sb.append(s);
+                //        sb.append(" "); // add a space separator between each unique string
+                //    }
+                //}
     
                 if (!hit_patterns.isEmpty()) {
                     this.retractionReason = hit_patterns;
                 }
             }
         }else{
-            Map<String, String> reason_unavailable = new HashMap<String, String>();
-            reason_unavailable.put("unavailable", "");
+            ArrayList reason_unavailable = new ArrayList<String>();
+            reason_unavailable.add("unavailable");
             this.retractionReason = reason_unavailable;
 
         }
     }
     
 
-    public Map<String, String> getRetractionReason(){
+    public ArrayList<String> getRetractionReason(){
         return this.retractionReason;
     }
 
