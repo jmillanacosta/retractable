@@ -59,7 +59,7 @@ public class Retractable{
             }
             ids.add(article.id);
             articleJson.addProperty("url", article.url != null ? article.url : "");
-            articleJson.addProperty("retraction_reason", article.retractionReason != null ? RetractReasonMatcher.convertToJson(article.retractionReason) : "");
+            articleJson.addProperty("retraction_reason", article.retractionReason != null ? Object.keys(RetractReasonMatcher.convertToJson(article.retractionReason)) : [];
             articleJson.addProperty("retraction_body", article.articleFullText != null ? article.articleFullText : "");
             jsonArray.add(articleJson);
 
