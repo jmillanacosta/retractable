@@ -51,12 +51,12 @@ jobs:
           pip install jupyter
       - name: Run notebook and update Markdown
         run: |
-          jupyter nbconvert --to markdown notebooks/00_basic_stats.ipynb
-          jupyter nbconvert --to markdown notebooks/01_extract_reasons.ipynb
+          jupyter nbconvert --to markdown notebooks/basic_stats.ipynb
+          jupyter nbconvert --to markdown notebooks/extract_reasons.ipynb
       - name: Commit and Push Changes
         run: |
-          mv notebooks/00_basic_stats.md docs/00_basic_stats.md
-          mv notebooks/01_extract_reasons.md docs/01_extract_reasons.md
+          mv notebooks/basic_stats.md docs/basic_stats.md
+          mv notebooks/extract_reasons.md docs/extract_reasons.md
           git add notebooks/* docs/* 
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
