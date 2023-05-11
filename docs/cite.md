@@ -2,8 +2,8 @@
 title: Cite Retractable
 layout: default
 ---
-{% include head.html %}
+{% include head.md %}
 
 todo
 
-{% include footer.html %}
+{% include footer.md %}

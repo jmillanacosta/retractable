@@ -2,8 +2,8 @@
 title: Schema
 layout: default
 ---
-{% include head.html %}
+{% include head.md %}
 
 TODO: create and share a schema.json and rdf
 
-{% include footer.html %}
+{% include footer.md %}

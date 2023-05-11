@@ -2,7 +2,7 @@
 layout: default
 ---
 
-{% include head.html %}
+{% include head.md %}
 
 Takes in a list of DOIs or bib file and tells you if they are retracted according to Europe PMC.
 
@@ -16,4 +16,4 @@ Notebook with the OpenAI llm (da vinci 003)-generated retraction reasons (demo, 
 
 work in progress...
 
-{% include footer.html %}
+{% include footer.md %}
