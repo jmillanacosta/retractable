@@ -1,0 +1,37 @@
+name: get_data
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: "0 9 * * MON"
+  workflow_dispatch:
+jobs:
+  get_data:
+    name: Run notebooks and commit changes
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT }}   
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+          cache: 'pip'      
+      - name: Install Dependencies
+        run: | 
+          pip install -r requirements.txt
+          pip install jupyter
+      - name: Get data and update notebook Markdown
+        run: |
+          jupyter nbconvert --to markdown src/notebooks/00_get_data.ipynb get_data.md
+      - name: Commit and Push Changes
+        run: |
+          mv src/notebooks/get_data.md docs/get_data.md
+          git add src/notebooks/* docs/* 
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "Automated data update" src/notebooks/* docs/*
+          git push -f
