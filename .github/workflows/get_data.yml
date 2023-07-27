@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 name: fetch_data
+=======
+name: get_data
+>>>>>>> b1f4747cdc970936d57c8e610aeffa1fea130268
 
 on:
   pull_request:
@@ -7,8 +11,13 @@ on:
     - cron: "0 9 * * MON"
   workflow_dispatch:
 jobs:
+<<<<<<< HEAD
   fetch_data:
     name: Fetch data
+=======
+  get_data:
+    name: Run notebooks and commit changes
+>>>>>>> b1f4747cdc970936d57c8e610aeffa1fea130268
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
@@ -24,6 +33,7 @@ jobs:
         run: | 
           pip install -r requirements.txt
           pip install jupyter
+<<<<<<< HEAD
       - name: Run retractable
         run: main.py
                     
@@ -33,4 +43,16 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git commit -m "Automated data update" data/*
+=======
+      - name: Get data and update notebook Markdown
+        run: |
+          jupyter nbconvert --to markdown src/notebooks/00_get_data.ipynb get_data.md
+      - name: Commit and Push Changes
+        run: |
+          mv src/notebooks/get_data.md docs/get_data.md
+          git add src/notebooks/* docs/* 
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "Automated data update" src/notebooks/* docs/*
+>>>>>>> b1f4747cdc970936d57c8e610aeffa1fea130268
           git push -f
