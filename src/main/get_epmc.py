@@ -1,4 +1,12 @@
 #!/usr/bin/env python3
+<<<<<<< HEAD
+=======
+"""
+This script queries EuropePMC for Retracted Publications
+
+Author: Javier Millan Acosta <javier.millan.acosta@gmail.com>
+"""
+>>>>>>> dev
 
 import pandas as pd
 import json
@@ -6,6 +14,10 @@ import yaml
 import numpy as np
 import requests
 import re
+<<<<<<< HEAD
+=======
+import logging
+>>>>>>> dev
 
 USER_AGENT = "Mozilla/5.0"
 page_size = 1000
@@ -33,11 +45,16 @@ def make_request(url):
         print(f"An unexpected error occurred: {e}")
         return None
 
+<<<<<<< HEAD
 def get_retracted_articles():
+=======
+def get_retracted_articles_epmc(url, page_size=1000):
+>>>>>>> dev
     """
     Get retracted articles from Europe PMC and save them to files.
     """
     global cursor_mark
+<<<<<<< HEAD
     # Initialize the list to store retracted articles
     retracted_articles_ePMC = []
 
@@ -45,6 +62,16 @@ def get_retracted_articles():
     # Make the initial request to get the total number of results
     url = f'https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=PUB_TYPE%3A%22retraction%20of%20publication%22&resultType=idlist&cursorMark={cursor_mark}&pageSize=1&format={format_type}'
     response = make_request(url)
+=======
+    global format_type
+    # Initialize the list to store retracted articles
+    retracted_articles_ePMC = []
+    initial_page_size = 1
+    print("Initial request to Europe PMC to get the retracted paper JSON")
+    # Make the initial request to get the total number of results
+    url_init = url.format(cursor_mark, initial_page_size, format_type)
+    response = make_request(url_init)
+>>>>>>> dev
 
     if response is None:
         return
@@ -57,6 +84,7 @@ def get_retracted_articles():
 
     # Iterate through each page and append the results to the list
     for i in range(num_requests):
+<<<<<<< HEAD
         cursor_mark = response.get('nextCursorMark')
 
         if cursor_mark is None:
@@ -69,6 +97,20 @@ def get_retracted_articles():
         if response is None:
             continue
 
+=======
+        if i == 0: 
+            next_cursor_mark = '*'
+        else:
+            next_cursor_mark = response.get('nextCursorMark')
+        if next_cursor_mark is None:
+            break
+        new_url = url.format(next_cursor_mark, page_size, format_type)
+        print(f"Request {i + 1} of {num_requests}: {new_url}")
+        response = make_request(new_url)
+        if response is None:
+            logging.WARN(f'No response for {new_url}!')
+            pass
+>>>>>>> dev
         retracted_articles_ePMC.extend(response.get('resultList', {}).get('result', []))
 
     # Create the final JSON object and save to file
@@ -87,6 +129,7 @@ def get_retracted_articles():
             data.to_csv('data/ePMC/all.tsv', sep='\t')
     except Exception as e:
         print(f"An error occurred while writing CSV file: {e}")
+<<<<<<< HEAD
 
 def main():
     # Read the configuration from the YAML file
@@ -106,3 +149,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+=======
+>>>>>>> dev
