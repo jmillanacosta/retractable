@@ -1,18 +1,18 @@
 name: fetch_data
+
 on:
   pull_request:
     branches: [ "main" ]
   schedule:
     - cron: "0 9 * * MON"
   workflow_dispatch:
+
 jobs:
   fetch_data:
     runs-on: ubuntu-latest
     name: Fetch data
-  get_data:
-    name: Run notebooks and commit changes
-    runs-on: ubuntu-latest
-    permissions: write-all
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v3
         with:
@@ -26,7 +26,7 @@ jobs:
         run: | 
           pip install -r requirements.txt
       - name: Run retractable
-        run: main.py
+        run: python main.py
       - name: Commit and Push Changes
         run: |
           git add data/*.tsv data/*.csv
