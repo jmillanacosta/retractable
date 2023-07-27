@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
+"""
+This script collates the data from the different sources.
 
+Author: Javier Millan Acosta <javier.millan.acosta@gmail.com>
+"""
 import pandas as pd
 import json
 import yaml
@@ -49,7 +53,7 @@ def save_data_to_csv(data, file_path, sep=',', index=False):
         index (bool, optional): Whether to include the index in the CSV. Defaults to False.
     """
     try:
-        data.to_csv(file_path, sep=sep, index=index)
+        data.to_csv(file_path, sep=sep, index=False)
     except Exception as e:
         raise Exception(f"Failed to save data to CSV: {e}")
 
@@ -66,46 +70,3 @@ def save_data_to_json(data, file_path):
             json.dump(data, f)
     except Exception as e:
         raise Exception(f"Failed to save data to JSON: {e}")
-
-def main():
-    """
-    Main function to load data from sources specified in the config, process it, and save it to output files.
-    """
-    # Read config file
-    try:
-        with open('config.yaml', 'r') as config_file:
-            config = yaml.safe_load(config_file)
-    except FileNotFoundError:
-        raise FileNotFoundError("Config file 'config.yaml' not found.")
-
-    # Load data from sources specified in the config
-    all_data = pd.DataFrame()
-    json_all = []
-    for source in config['sources']:
-        try:
-            data_source = load_data(source)
-            all_data = pd.concat([all_data, data_source])
-        except Exception as e:
-            raise Exception(f"Error loading data from '{source}': {e}")
-
-        try:
-            json_source = load_json(source)
-            json_all.append(json_source)
-        except Exception as e:
-            raise Exception(f"Error loading JSON from '{source}': {e}")
-
-    # Save processed data to respective files
-    save_data_to_csv(all_data, 'data/all.tsv', sep='\t')
-    save_data_to_csv(all_data[['pmid', 'doi']], 'data/PMIDS_DOIS.csv', sep=',', index=False)
-    save_data_to_csv(all_data[['id']], 'data/ids.csv', sep=',', index=False)
-
-    try:
-        save_data_to_json(json_all, 'data/retracts.json')
-    except Exception as e:
-        raise Exception(f"Error saving JSON data: {e}")
-
-if __name__ == "__main__":
-    try:
-        main()
-    except Exception as e:
-        print(f"Error occurred: {e}")
