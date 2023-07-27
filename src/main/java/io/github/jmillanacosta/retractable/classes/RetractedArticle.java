@@ -32,7 +32,7 @@ public class RetractedArticle {
     public void setPmcId(String pmcid) {
         this.pmcid = pmcid;
     }
-    public void setPmid(String pmcid) {
+    public void setPmid(String pmid) {
         this.pmid = pmid;
     }
     public void setId(String id) {
