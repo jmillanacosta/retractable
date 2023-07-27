@@ -5,9 +5,5 @@ products:
 - PMIDS_DOIS.csv
 - ids.csv
 - all.tsv
-<<<<<<< HEAD
 ePMC:
   query_url: 'https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=PUB_TYPE%3A%22Retracted%20Publication%22&resultType=core&cursorMark={}&pageSize={}&format={}'
-=======
-query_url: 'https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=PUB_TYPE%3A%22Retracted%20Publication%22&resultType=core&cursorMark={cursor_mark}&pageSize={page_size}&format={format_type}'
->>>>>>> b1f4747cdc970936d57c8e610aeffa1fea130268

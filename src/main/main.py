@@ -71,7 +71,7 @@ def main():
         # Save processed data to respective files in collate.py
         try:
             print('\nSaving data...')
-            save_data_to_csv(all_data, 'data/all.tsv', sep='\t')
+            save_data_to_csv(all_data, 'data/all.tsv', sep='\t', index=False)
             print('\t- data/all.tsv')
             save_data_to_csv(all_data[['pmid', 'doi']], 'data/PMIDS_DOIS.csv', sep=',', index=False)
             print('\t- data/ids.csv')
