@@ -1,13 +1,4 @@
 #!/usr/bin/env python3
-<<<<<<< HEAD
-
-=======
-"""
-This script collates the data from the different sources.
-
-Author: Javier Millan Acosta <javier.millan.acosta@gmail.com>
-"""
->>>>>>> dev
 import pandas as pd
 import json
 import yaml
@@ -57,11 +48,7 @@ def save_data_to_csv(data, file_path, sep=',', index=False):
         index (bool, optional): Whether to include the index in the CSV. Defaults to False.
     """
     try:
-<<<<<<< HEAD
         data.to_csv(file_path, sep=sep, index=index)
-=======
-        data.to_csv(file_path, sep=sep, index=False)
->>>>>>> dev
     except Exception as e:
         raise Exception(f"Failed to save data to CSV: {e}")
 
@@ -77,7 +64,6 @@ def save_data_to_json(data, file_path):
         with open(file_path, 'w') as f:
             json.dump(data, f)
     except Exception as e:
-<<<<<<< HEAD
         raise Exception(f"Failed to save data to JSON: {e}")
 
 def main():
@@ -122,6 +108,3 @@ if __name__ == "__main__":
         main()
     except Exception as e:
         print(f"Error occurred: {e}")
-=======
-        raise Exception(f"Failed to save data to JSON: {e}")
->>>>>>> dev
