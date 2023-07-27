@@ -24,6 +24,7 @@ public class Retractable{
     public final static String PMIDS = "data/pmids.csv";
     public final static String IDPMCID = "data/IDPMCID.csv";
     public final static String IDS = "data/ids.csv";
+    public final static String PMIDS_DOIS="data/PMIDS_DOIS.csv";
 
     public static void main( String[] args ) throws Exception
     {   
@@ -47,6 +48,7 @@ public class Retractable{
         ArrayList<String> idPmidMap = new ArrayList<String>();
         ArrayList<String> ids = new ArrayList<String>();
         ArrayList<String> pmids = new ArrayList<String>();
+        ArrayList<String> pmidDoiMap = new ArrayList<String>();
 
         idPmcidMap.add("id,pmcid");
         int articleNumber = retractedArticles.size(); 
@@ -63,6 +65,10 @@ public class Retractable{
             if (article.pmid != null){
                 pmids.add(article.pmid);
                 idPmidMap.add(article.id + "," + article.pmid);
+                if (article.doi != null){
+                    pmidDoiMap.add(article.pmid + "," + article.doi);
+                    
+                }
             }
             ids.add(article.id);
             articleJson.addProperty("url", article.url != null ? article.url : "");
@@ -129,6 +135,20 @@ public class Retractable{
         // Write the ArrayList to the pmcid, id map file
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(IDPMCID))) {
             for (String string : idPmcidMap) {
+                writer.write(string);
+                writer.newLine(); // Add a new line after each string
+            }
+            System.out.println("ArrayList written to file successfully!");
+        } catch (IOException e) {
+            System.err.println("Error writing ArrayList to file: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+
+        // Write the ArrayList to the pmid, doi map file
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(PMIDS_DOIS))) {
+            for (String string : pmidDoiMap) {
                 writer.write(string);
                 writer.newLine(); // Add a new line after each string
             }

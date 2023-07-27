@@ -21,6 +21,7 @@ import io.github.jmillanacosta.retractable.utils.EuropePMC.RetractReasonMatcher;
 public class RetractedArticle {
     public String id;
     public String pmcid;
+    public String doi;
     public String articleAbstract;
     //public String articleFullText;
     public String url;
@@ -31,6 +32,10 @@ public class RetractedArticle {
 
     public void setPmcId(String pmcid) {
         this.pmcid = pmcid;
+    }
+
+    public void setDOi(String doi) {
+        this.doi = doi;
     }
     public void setPmid(String pmid) {
         this.pmid = pmid;
@@ -52,6 +57,9 @@ public class RetractedArticle {
     }
     public String getId() {
         return this.id;
+    }
+    public String getDoi() {
+        return this.doi;
     }
     public String getPmid() {
         return this.pmid;

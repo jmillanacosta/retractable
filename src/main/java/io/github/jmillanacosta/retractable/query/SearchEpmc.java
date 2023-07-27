@@ -13,8 +13,8 @@ import com.google.gson.JsonObject;
 
 public class SearchEpmc {
     private final static String USER_AGENT = "Mozilla/5.0";
-    private final static String BASE_URL = "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=%s&resultType=idlist&cursorMark=%s&pageSize=%s&format=json";
-    private final static String FIRST_URL = "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=%s&resultType=idlist&cursorMark=*&pageSize=1000&format=json";
+    private final static String BASE_URL = "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=%s&resultType=core&cursorMark=%s&pageSize=%s&format=json";
+    private final static String FIRST_URL = "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=%s&resultType=core&cursorMark=*&pageSize=1000&format=json";
 
     public static JsonObject streamToJson(String query, String url, String cursorMark, int pageSize) throws Exception{
         String url_formatted = String.format(url, query, cursorMark, pageSize);

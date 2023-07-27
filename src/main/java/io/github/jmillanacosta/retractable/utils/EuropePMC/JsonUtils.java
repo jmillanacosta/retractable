@@ -32,6 +32,7 @@ public class JsonUtils {
             String source_id = jsonObject.get("id").getAsString();
             JsonElement pmcid_el = jsonObject.get("pmcid");
             JsonElement pmid_el = jsonObject.get("pmid");
+            JsonElement doi_el = jsonObject.get("doi");
             
             if (!Character.isLetter(source_id.charAt(0))){
                 String id = source + source_id;
@@ -71,6 +72,12 @@ public class JsonUtils {
             //        // TODO when no retraction reason provided
                 } } catch (IndexOutOfBoundsException e) {
             //        // TODO catch exception
+                }
+
+            try{
+                if (doi_el != null) {
+                    retractedArticle.setDOi(doi_el.getAsString());
+                } } catch (IndexOutOfBoundsException e) {
                 }
             //try{
             //    if (pmid_el != null) {
