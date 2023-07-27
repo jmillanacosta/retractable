@@ -44,6 +44,7 @@ public class Retractable{
         int i = 0;
         ArrayList<String> pmcids = new ArrayList<String>();
         ArrayList<String> idPmcidMap = new ArrayList<String>();
+        ArrayList<String> idPmidMap = new ArrayList<String>();
         ArrayList<String> ids = new ArrayList<String>();
         ArrayList<String> pmids = new ArrayList<String>();
 
