@@ -52,7 +52,7 @@ public class SearchEpmc {
         int hitCount = firstJson.get("hitCount").getAsInt();
         // Calculate the number of requests needed to retrieve all results with pageSize = 1000
         int pageSize = 1000;
-        int reqNum = (( (hitCount + pageSize) / pageSize ));
+        int reqNum = (( (hitCount + pageSize) / pageSize + 1));
 
         JsonArray result = new JsonArray();
         String cursorMark = "*";

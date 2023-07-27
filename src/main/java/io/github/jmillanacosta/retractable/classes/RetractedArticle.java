@@ -24,12 +24,16 @@ public class RetractedArticle {
     public String articleAbstract;
     public String articleFullText;
     public String url;
+    public String pmid;
     public ArrayList retractionReason;
     public final static String USER_AGENT = "Mozilla/5.0";
     public final static String BASE_URL = "https://www.ebi.ac.uk/europepmc/webservices/rest/%s/fullTextXML";
 
     public void setPmcId(String pmcid) {
         this.pmcid = pmcid;
+    }
+    public void setPmid(String pmcid) {
+        this.pmid = pmid;
     }
     public void setId(String id) {
         this.id = id;
@@ -48,6 +52,9 @@ public class RetractedArticle {
     }
     public String getId() {
         return this.id;
+    }
+    public String getPmid() {
+        return this.pmid;
     }
     public String getPmcid() {
         return this.pmcid;

@@ -21,6 +21,7 @@ public class Retractable{
     public final static String PMC_FILEPATH = "data/ePMC_retracts.json";
     public final static String DATA_FILEPATH = "data/retractable.json";
     public final static String PMCIDS = "data/pmcids.csv";
+    public final static String PMIDS = "data/pmids.csv";
     public final static String IDPMCID = "data/IDPMCID.csv";
     public final static String IDS = "data/ids.csv";
 
@@ -44,6 +45,7 @@ public class Retractable{
         ArrayList<String> pmcids = new ArrayList<String>();
         ArrayList<String> idPmcidMap = new ArrayList<String>();
         ArrayList<String> ids = new ArrayList<String>();
+        ArrayList<String> pmids = new ArrayList<String>();
 
         idPmcidMap.add("id,pmcid");
         int articleNumber = retractedArticles.size(); 
@@ -56,6 +58,10 @@ public class Retractable{
             if (article.pmcid != null){
                 pmcids.add(article.pmcid);
                 idPmcidMap.add(article.id + "," + article.pmcid);
+            }
+            if (article.pmid != null){
+                pmids.add(article.pmcid);
+                idPmidMap.add(article.id + "," + article.pmid);
             }
             ids.add(article.id);
             articleJson.addProperty("url", article.url != null ? article.url : "");

@@ -31,6 +31,7 @@ public class JsonUtils {
             String source = jsonObject.get("source").getAsString();
             String source_id = jsonObject.get("id").getAsString();
             JsonElement pmcid_el = jsonObject.get("pmcid");
+            JsonElement pmid_el = jsonObject.get("pmid");
             
             if (!Character.isLetter(source_id.charAt(0))){
                 String id = source + source_id;
@@ -53,6 +54,7 @@ public class JsonUtils {
                 } } catch (IndexOutOfBoundsException e) {
                     // TODO catch exception
                 }
+                retractedArticle.setPmid(pmid_el.getAsString());
             
 
             
