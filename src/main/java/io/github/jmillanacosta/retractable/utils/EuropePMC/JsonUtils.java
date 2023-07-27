@@ -44,16 +44,34 @@ public class JsonUtils {
             retractedArticles.add(retractedArticle);
             String url = String.format("https://europepmc.org/article/%s/%s", source, source_id);
             retractedArticle.setURL(url);
-            //try{
-            //    if (pmcid_el != null) {
-            //        retractedArticle.setPmcId(pmcid_el.//getAsString());
+            try{
+                if (pmcid_el != null) {
+                    retractedArticle.setPmcId(pmcid_el.getAsString());
             //        //retractedArticle.setArticleFullText();
             //        //retractedArticle.setRetractionReason();
             //    } else {
             //        // TODO when no retraction reason provided
             //    } } catch (IndexOutOfBoundsException e) {
             //        // TODO catch exception
-            //    }
+                }
+            //try{
+            //    if (pmid_el != null) {
+            //        retractedArticle.setPmid(pmid_el.//getAsString());
+            //    } else {
+            //        // TODO when no retraction reasonprovided
+                }  catch (IndexOutOfBoundsException e) {
+            //        // TODO catch exception
+                }
+            try{
+                if (pmid_el != null) {
+                    retractedArticle.setPmid(pmid_el.getAsString());
+            //        //retractedArticle.setArticleFullText();
+            //        //retractedArticle.setRetractionReason();
+            //    } else {
+            //        // TODO when no retraction reason provided
+                } } catch (IndexOutOfBoundsException e) {
+            //        // TODO catch exception
+                }
             //try{
             //    if (pmid_el != null) {
             //        retractedArticle.setPmid(pmid_el.//getAsString());
@@ -61,7 +79,7 @@ public class JsonUtils {
             //        // TODO when no retraction reasonprovided
             //    } } catch (IndexOutOfBoundsException e) {
             //        // TODO catch exception
-            //    }
+                
             
 
             
