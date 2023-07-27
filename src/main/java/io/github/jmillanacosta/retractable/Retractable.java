@@ -28,7 +28,7 @@ public class Retractable{
     public static void main( String[] args ) throws Exception
     {   
         
-        String query = "PUB_TYPE%3A%22retraction%20of%20publication%22";
+        String query = "PUB_TYPE%3A%22Retracted%20Publication%22";
         // Retrieve JsonArray for the query
         JsonArray resultEPmcQuery = SearchEpmc.searchQuery(query);
         // Write it to a file
