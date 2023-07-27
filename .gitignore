@@ -1,8 +1,2 @@
-target
-.vscode
-log
-*subset*
-log
-problem-makers.txt
-notes.txt
-openAI_key.txt
+data/retracts.json
+data/ePMC/retracts.json
