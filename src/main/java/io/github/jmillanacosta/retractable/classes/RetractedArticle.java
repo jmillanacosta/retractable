@@ -189,4 +189,4 @@ public class RetractedArticle {
     //public String getArticleFullText(){
     //    return this.getArticleFullText();
     //}
-}
+
