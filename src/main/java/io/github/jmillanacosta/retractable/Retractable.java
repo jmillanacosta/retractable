@@ -113,7 +113,17 @@ public class Retractable{
             System.err.println("Error writing ArrayList to file: " + e. getMessage());
             e.printStackTrace();
         }
-
+        // Write the ArrayList to the pmids file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter  (PMIDS))) {
+            for (String string : pmids) {
+                writer.write(string);
+                writer.newLine(); // Add a new line after each string
+            }
+            System.out.println("ArrayList written to file successfully!");
+        } catch (IOException e) {
+            System.err.println("Error writing ArrayList to file: " + e. getMessage());
+            e.printStackTrace();
+        }
         
         
         // Write the ArrayList to the pmcid, id map file
