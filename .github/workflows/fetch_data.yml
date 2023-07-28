@@ -27,7 +27,7 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
       - name: Run retractable
-        run: python main.py
+        run: python src/main/main.py
       - name: Commit and Push Changes
         run: |
           git add data/*.tsv data/*.csv
