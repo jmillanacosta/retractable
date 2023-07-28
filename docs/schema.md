@@ -63,7 +63,7 @@ The `retrct:RetractionNotice` class represents a notice indicating the retractio
 ### [hasRetractionNotice](#hasRetractionNotice)
 
 
-The `retrct:hasRetractionNotice` object property relates a retracted paper" to its corresponding retraction notice.
+The `retrct:hasRetractionNotice` object property relates a retracted paper to its corresponding retraction notice.
 
 | Property           | Description                                                                                                                       |
 |--------------------|-----------------------------------------------------------------------------------------------------------------------------------|
