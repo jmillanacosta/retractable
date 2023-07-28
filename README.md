@@ -22,6 +22,11 @@ Documentation on the RDF schema is available on:
 
 https://www.jmillanacosta.com/retractable/schema
 
+
+## Stats
+
+Some stats available [here](/docs/basic_visualization.md)
+
 ## Tests
 
 TBD

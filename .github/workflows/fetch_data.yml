@@ -54,11 +54,13 @@ jobs:
           pip install jupyter
       - name: Run notebooks
         run: |
-          input_directory="/src/main/notebooks/"
-          for notebook in "$input_directory"/*.ipynb; do
-            base_filename=$(basename "${notebook%.ipynb}")
-            new_filename=$(echo "$base_filename" | sed -E 's/^[0-9]+_//')
-            jupyter nbconvert --to markdown "$notebook" --output "docs/${new_filename}.md"
+          input_directory="src/main/notebooks/"
+          for notebook in $(ls $input_directory | grep ".*.ipynb"); do
+            new_filename=$(echo $notebook | sed -E 's|ipynb|md|')
+            echo $new_filename
+            echo $notebook
+            jupyter nbconvert --to markdown "$input_directory$notebook" 
+            mv $input_directory$new_filename docs/$new_filename
           done
       - name: Commit and Push Changes
         run: |
