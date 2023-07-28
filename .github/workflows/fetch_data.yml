@@ -30,7 +30,7 @@ jobs:
         run: python src/main/main.py
       - name: Commit and Push Changes
         run: |
-          git add data/*.tsv data/*.csv
+          git add data/*.tsv data/*.csv data/*.json
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git commit -m "Automated data update" data/*

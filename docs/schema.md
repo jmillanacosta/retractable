@@ -32,17 +32,15 @@ The schema uses the following namespace:
 |-----------------------------------------------|----------|
 | https://www.jmillanacosta.com/retractable/schema# | retrct   |
 
-
-<h2><a href=#Classes>Classes</a></h2>
-<h3><a href=#Paper>Paper </a></h3>
-
+## [Classes](#Classes)
+### [Paper](#Paper)
 The `retrct:Paper` class represents a research paper or academic journal article.
 
 | Object property           | Description                                                                                                                            |
 |--------------------|-----------------------|
 | rtrct:hasRetractionNotice         | Relates a retracted paper to its retraction notice.|
 
-<h3><a href=#RetractedPaper>RetractedPaper </a></h3>
+### [RetractedPaper](#RetractedPaper)
 
 The `retrct:RetractedPaper` class represents a paper that has been retracted.
 
@@ -50,7 +48,7 @@ The `retrct:RetractedPaper` class represents a paper that has been retracted.
 |--------------------|----------------------------------------------------------------------------------------------------------------------------------------|
 | retrct:isRectractionNoticeOf         | Relates a retraction notice to its retracted paper|
 
-<h3><a href=#RetractionNotice>RetractionNotice </a></h3>
+### [RetractionNotice](#RetractionNotice)
 
 The `retrct:RetractionNotice` class represents a notice indicating the retraction of a paper.
 
@@ -61,8 +59,8 @@ The `retrct:RetractionNotice` class represents a notice indicating the retractio
 
 
 
-<h2><a href=#ObjectProperties>Object Properties</a></h2>
-<h3><a href=#hasRetractionNotice>hasRetractionNotice </a></h3>
+## [Object Properties](#ObjectProperties)
+### [hasRetractionNotice](#hasRetractionNotice)
 
 
 The `retrct:hasRetractionNotice` object property relates a retracted paper" to its corresponding retraction notice.
@@ -73,7 +71,7 @@ The `retrct:hasRetractionNotice` object property relates a retracted paper" to i
 | rdfs:domain         | "RetractedPaper" class  |
 
 
-<h3><a href=#isRetractionNoticeOf>isRetractionNoticeOf </a></h3>
+### [isRetractionNoticeOf](#isRetractionNoticeOf)
 
 The `retrct:isRetractionNoticeOf` object property is the inverse of `retrct:hasRetractionNotice`, relating a retraction notice to the publication it retracts.
 
@@ -82,7 +80,7 @@ The `retrct:isRetractionNoticeOf` object property is the inverse of `retrct:hasR
 | rdfs:range         | "RetractedPaper" class
 | rdfs:domain         | "RetractionNotice" class  |
 
-<h2><a href=#Usage>Usage</a></h2>
+## [Usage](#Usage)
 
 You can use the "Retract" schema to create RDF statements that describe academic papers, retracted papers, and retraction notices. For example:
 
