@@ -90,6 +90,7 @@ You can use the "Retract" schema to create RDF statements that describe academic
 ```
 
 - Define a research paper
+
 ```RDF
 <https://example.com/paper/123> a retrct:Paper ;
     rdfs:label "Paper Title" ;
@@ -97,6 +98,7 @@ You can use the "Retract" schema to create RDF statements that describe academic
     dcterms:creator "John Doe" .
 ```
 - Define a retracted paper
+
 ```RDF
 <https://example.com/retracted/456> a retrct:RetractedPaper ;
     rdfs:label "Retracted Paper Title" ;
@@ -104,6 +106,7 @@ You can use the "Retract" schema to create RDF statements that describe academic
 ```
 
 - Define a retraction notice
+
 ```RDF
 <https://example.com/retractionNotice/789> a retrct:RetractionNotice ;
     rdfs:label "Retraction Notice Title" ;
