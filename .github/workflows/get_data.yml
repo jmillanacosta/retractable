@@ -1,4 +1,4 @@
-name: fetch_data
+name: Fetch data
 
 on:
   pull_request:
@@ -24,6 +24,7 @@ jobs:
           cache: 'pip'      
       - name: Install Dependencies
         run: | 
+          pip install --upgrade pip
           pip install -r requirements.txt
       - name: Run retractable
         run: python main.py
