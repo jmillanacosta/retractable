@@ -33,10 +33,11 @@ def make_request(url):
         print(f"An unexpected error occurred: {e}")
         return None
 
-def get_retracted_articles():
+def get_retracted_articles_epmc(query_url):
     """
     Get retracted articles from Europe PMC and save them to files.
     """
+    url=query_url
     global cursor_mark
     # Initialize the list to store retracted articles
     retracted_articles_ePMC = []

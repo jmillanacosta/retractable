@@ -27,7 +27,7 @@ def main():
                 config = yaml.safe_load(config_file)
             # Europe PMC
             print('1.   EuropePMC\n')
-            query_url = config['ePMC']['query_url']
+            query_url = config['sources']['ePMC']['query_url']
             print(f'Query URL: {query_url}\n')
             if query_url:
                 # Execute get_retracted_articles() from get_epmc.py

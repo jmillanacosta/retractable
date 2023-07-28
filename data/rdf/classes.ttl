@@ -1,0 +1,34 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix mesh: <http://id.nlm.nih.gov/mesh/> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix retrct: <https://www.jmillanacosta.com/retractable/schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix omit: <http://purl.obolibrary.org/obo/OMIT_> .
+@prefix meshv: <http://id.nlm.nih.gov/mesh/vocab#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix schema: <https://schema.org/> .
+
+retrct:Paper a owl:Class ;
+    rdfs:label "Paper" ;
+    rdfs:subClassOf dcterms:BibliographicResource ;
+    rdfs:comment "A research paper or academic journal article." .
+
+retrct:RetractedPaper a owl:Class ;
+    rdfs:label "Retracted Paper" ;
+    rdfs:subClassOf retrct:Paper ;
+    rdfs:comment "A paper that has been retracted." ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty retrct:hasRetractionNotice ;
+        owl:someValuesFrom retrct:RetractionNotice ;
+    ] .
+
+
+retrct:RetractionNotice a owl:Class ;
+    rdfs:label "Retraction Notice" ;
+    rdfs:subClassOf dcterms:BibliographicResource ;
+    rdfs:comment "A notice indicating the retraction of a paper." .

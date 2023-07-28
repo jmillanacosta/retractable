@@ -1,0 +1,19 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix mesh: <http://id.nlm.nih.gov/mesh/> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix retrct: <https://www.jmillanacosta.com/retractable/schema#> .
+
+retrct:hasRetractionNotice a owl:ObjectProperty ;
+    rdfs:label "has retraction notice" ;
+    rdfs:domain retrct:RetractedPaper ;
+    rdfs:range retrct:RetractionNotice ;
+    rdfs:comment "Relates a retracted paper to its retraction notice." .
+
+retrct:isRetractionNoticeOf a owl:ObjectProperty ;
+    rdfs:label "is retraction notice of" ;
+    rdfs:domain retrct:RetractionNotice ;
+    rdfs:range retrct:RetractedPaper ;
+    rdfs:comment "Relates a retraction notice to its retracted paper" .
