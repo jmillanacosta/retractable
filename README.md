@@ -8,13 +8,7 @@ This projects queries journal article databases for retracted papers and collect
 
 ## Data
 
-The `data` directory contains is structured as follows:
-- all.tsv
-- PMIDS_DOIS.csv
-- retracts.json
-- data/retractable.ttl
-
-The subsets for each database (for now only EuropePMC) are provided under the `data` directory.
+(...)
 
 ## Schema
 
