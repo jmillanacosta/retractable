@@ -5,4 +5,4 @@ Requests==2.31.0
 xmltodict==0.13.0
 rdflib==6.3.2
 pyparsing==2.1.0
-isodate==0.7.0
+isodate==0.6.1
