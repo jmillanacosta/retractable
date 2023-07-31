@@ -28,12 +28,25 @@ jobs:
           pip install -r requirements.txt
       - name: Run retractable
         run: python src/main/main.py
-      - name: Commit and Push Changes
+      - name: Check for Changes
+        id: check_changes
         run: |
-          git add data/*.tsv data/*.csv
+          cp -f data/rdf/retractable.ttl docs/rdf/retractable.ttl
+          if [[ -n $(git diff --exit-code data/ docs/) ]]; then
+            echo "There are changes in the 'data/ or docs/' directories."
+            echo "::set-output name=changes::true"
+          else
+            echo "No changes in the 'data/ or docs/' directories. Skipping commit."
+            echo "::set-output name=changes::false"
+          fi
+      - name: Commit and Push Changes
+        if: steps.check_changes.outputs.changes == 'true'
+        run: |
+          git add data/*ld
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m "Automated data update" data/*.tsv data/*.csv
+          git commit -m "Automated data update" data/*ld docs/rdf/*
+          git push
   run_nbs:
     needs: fetch_data
     runs-on: ubuntu-latest

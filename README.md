@@ -20,7 +20,7 @@ The subsets for each database (for now only EuropePMC) are provided under the `d
 
 Documentation on the RDF schema is available on:
 
-https://www.jmillanacosta.com/retractable/schema
+https://www.jmillanacosta.com/retractable/rdf/schema
 
 
 ## Stats

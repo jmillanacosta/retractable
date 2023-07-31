@@ -94,7 +94,7 @@ You can use the "Retract" schema to create RDF statements that describe academic
 ```RDF
 <https://example.com/paper/123> a retrct:Paper ;
     rdfs:label "Paper Title" ;
-    dcterms:title "Paper Title" ;
+    dc:title "Paper Title" ;
     dcterms:creator "John Doe" .
 ```
 - Define a retracted paper
@@ -110,7 +110,5 @@ You can use the "Retract" schema to create RDF statements that describe academic
 ```RDF
 <https://example.com/retractionNotice/789> a retrct:RetractionNotice ;
     rdfs:label "Retraction Notice Title" ;
-    dcterms:description "This paper has been retracted due to xyz reasons." .
+    dcterms:description "..." .
 ```
-In the above example, we have created instances of "Paper," "RetractedPaper," and "RetractionNotice" classes. The "RetractedPaper" is linked to its corresponding "RetractionNotice" using the "hasRetractionNotice" property.
-

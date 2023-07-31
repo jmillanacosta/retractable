@@ -13,6 +13,7 @@ import logging
 import yaml
 from get_epmc import get_retracted_articles_epmc
 from collate import load_data, load_json, save_data_to_csv, save_data_to_json
+from to_rdf import to_jsonld, to_turtle
 import pandas as pd 
 import json
 
@@ -28,10 +29,14 @@ def main():
             # Europe PMC
             print('1.   EuropePMC\n')
             query_url = config['sources']['ePMC']['query_url']
+            article_url = config['sources']['ePMC']['article_url']
             print(f'Query URL: {query_url}\n')
             if query_url:
                 # Execute get_retracted_articles() from get_epmc.py
-                get_retracted_articles_epmc(query_url)
+                epmc = get_retracted_articles_epmc(query_url, article_url)
+                # Save to json
+                with open('data/ePMC/retracts.json', 'w') as f:
+                    json.dump(epmc, f)
             else:
                 print("Query URL not found in the configuration file.")
                 exit(1)
@@ -63,7 +68,7 @@ def main():
 
             try:
                 json_source = load_json(source)
-                json_all.append(json_source)
+                json_all.extend(json_source)
             except Exception as e:
                 logging.exception(f"Error loading JSON from '{source}' in collate.py: {e}")
                 exit(1)
@@ -71,16 +76,20 @@ def main():
         # Save processed data to respective files in collate.py
         try:
             print('\nSaving data...')
-            save_data_to_csv(all_data, 'data/all.tsv', sep='\t', index=False)
-            print('\t- data/all.tsv')
-            save_data_to_csv(all_data[['pmid', 'doi']], 'data/PMIDS_DOIS.csv', sep=',', index=False)
-            print('\t- data/ids.csv')
-            save_data_to_csv(all_data[['id']], 'data/ids.csv', sep=',', index=False)
             save_data_to_json(json_all, 'data/retracts.json')
-            print('\t- data/retracts.json')
-            print('\nSuccessful run.')
+            print('\t- data/retracts.json saved')
+            # Save json-ld
+            print('Saving to json-ld...')
+            uri_file = config.get('uri_file')
+            jsonld= to_jsonld(json_all, uri_file)
+            with open('data/retracts.jsonld', 'w') as f:
+                json.dump(jsonld, f)
+                print('\t- data/retracts.jsonld saved')
+            with open('data/rdf/retractable.ttl', 'w') as f:
+                f.write(to_turtle('data/retracts.jsonld'))
+                print('\t- data/rdf/retractable.ttl saved')
         except Exception as e:
-            logging.exception(f"Error saving data in collate.py: {e}")
+            logging.exception(f"Error saving data: {e}")
 
     except Exception as e:
         logging.exception("Error occurred while executing the scripts.")
