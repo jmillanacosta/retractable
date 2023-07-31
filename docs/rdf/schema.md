@@ -33,12 +33,6 @@ The schema uses the following namespace:
 | https://www.jmillanacosta.com/retractable/schema# | retrct   |
 
 ## [Classes](#Classes)
-### [Paper](#Paper)
-The `retrct:Paper` class represents a research paper or academic journal article.
-
-| Object property           | Description                                                                                                                            |
-|--------------------|-----------------------|
-| rtrct:hasRetractionNotice         | Relates a retracted paper to its retraction notice.|
 
 ### [RetractedPaper](#RetractedPaper)
 
@@ -46,7 +40,7 @@ The `retrct:RetractedPaper` class represents a paper that has been retracted.
 
 | Property           | Description                                                                                                                            |
 |--------------------|----------------------------------------------------------------------------------------------------------------------------------------|
-| retrct:isRectractionNoticeOf         | Relates a retraction notice to its retracted paper|
+| retrct:hasRetractionNotice         | Relates a retraction notice to its retracted paper|
 
 ### [RetractionNotice](#RetractionNotice)
 
