@@ -14,7 +14,7 @@ techArticle:
   license: "CC-BY 4.0"
   url:
     - "@type": URL
-      url: "https://www.jmillanacosta.com/retractable/schema"
+      url: "https://www.jmillanacosta.com/retractable/rdf/schema"
   version: 1.0
 ---
 
