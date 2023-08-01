@@ -93,7 +93,11 @@ def get_retracted_articles_epmc(query_url, article_url):
             retract_source = article_retract.get('source', 'NA')
             retraction_url = article_url.format(retract_source, retract_id, 'dc')
             retraction_json = xmltodict.parse(make_request(retraction_url).text)['responseWrapper']
-            item['retraction'] = retraction_json.get('rdf:RDF', {}).get('rdf:Description',{})
+            try:
+                item['retraction'] = retraction_json.get('rdf:RDF', {}).get('rdf:Description',{})
+            except:
+                print('Skipping', retract_id)
+                continue
             if 'dcterms:abstract' in item['retraction'].keys():
                 item['retraction'].pop('dcterms:abstract')
             if 'retraction' in item['retraction'].keys():
