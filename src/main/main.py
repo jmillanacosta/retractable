@@ -6,7 +6,7 @@ This script runs the 'get_epmc.py' script to query EuropePMC for
 Retracted Publications and then runs the 'collate.py' script to
 collate the results from each module into the main files in data.
 
-Author: Your Name <your.email@example.com>
+Author: Javier Millán Acosta
 """
 
 import logging
