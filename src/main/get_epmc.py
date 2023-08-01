@@ -60,7 +60,7 @@ def get_retracted_articles_epmc(query_url, article_url):
 
     # Calculate the number of requests needed to retrieve all results
     num_requests = (total + page_size) // page_size + 1
-    print(f"Will need to perform {num_requests} requests.")
+    print(f"Will need to perform {num_requests+1} requests.")
     j =0
     # Iterate through each page and append the results to the list
     for i in range(num_requests): 
@@ -68,7 +68,7 @@ def get_retracted_articles_epmc(query_url, article_url):
         if cursor_mark is None:
             break
         url = query_url.format(cursor_mark, page_size, format_type)
-        print(f"\nRequest {i + 1} of {num_requests}: {url}")
+        print(f"\nRequest {i+1} of {num_requests+1}: {url}")
         response = make_request(url)
         if response is None:
             continue
@@ -76,7 +76,9 @@ def get_retracted_articles_epmc(query_url, article_url):
         dict_response = o['responseWrapper']
         result = dict_response.get('rdf:RDF', {}).get('rdf:Description',{})
         j +=1
+
         for item in result:
+
             # Drop abstract
             if 'dcterms:abstract' in item.keys():
                 item.pop('dcterms:abstract')

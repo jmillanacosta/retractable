@@ -12,8 +12,8 @@ Author: Your Name <your.email@example.com>
 import logging
 import yaml
 from get_epmc import get_retracted_articles_epmc
-from collate import load_data, load_json, save_data_to_csv, save_data_to_json
-from to_rdf import to_jsonld, to_turtle
+from collate import load_json
+from to_rdf import make_rdf
 import pandas as pd 
 import json
 
@@ -56,16 +56,8 @@ def main():
             exit(1)
 
         # Load data from sources specified in the config for collate.py
-        all_data = pd.DataFrame()
         json_all = []
         for source in config['sources']:
-            try:
-                data_source = load_data(source)
-                all_data = pd.concat([all_data, data_source])
-            except Exception as e:
-                logging.exception(f"Error loading data from '{source}' in collate.py: {e}")
-                exit(1)
-
             try:
                 json_source = load_json(source)
                 json_all.extend(json_source)
@@ -73,21 +65,11 @@ def main():
                 logging.exception(f"Error loading JSON from '{source}' in collate.py: {e}")
                 exit(1)
 
-        # Save processed data to respective files in collate.py
+        # Fix json for json-ld
         try:
-            print('\nSaving data...')
-            save_data_to_json(json_all, 'data/retracts.json')
-            print('\t- data/retracts.json saved')
-            # Save json-ld
-            print('Saving to json-ld...')
             uri_file = config.get('uri_file')
-            jsonld= to_jsonld(json_all, uri_file)
-            with open('data/retracts.jsonld', 'w') as f:
-                json.dump(jsonld, f)
-                print('\t- data/retracts.jsonld saved')
-            with open('data/rdf/retractable.ttl', 'w') as f:
-                f.write(to_turtle('data/retracts.jsonld'))
-                print('\t- data/rdf/retractable.ttl saved')
+            make_rdf(json_all, uri_file)
+            
         except Exception as e:
             logging.exception(f"Error saving data: {e}")
 

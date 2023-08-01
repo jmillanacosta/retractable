@@ -39,6 +39,23 @@ jobs:
             echo "No changes in the 'data/ or docs/' directories. Skipping commit."
             echo "::set-output name=changes::false"
           fi
+      - name: Compress Files if Exceeds 1.99GB
+        if: steps.check_changes.outputs.changes == 'true'
+        run: |
+          # Check file sizes
+          data_size=$(du -sb data/ | cut -f1)
+          docs_size=$(du -sb docs/ | cut -f1)
+          echo "data size: $data_size"
+          echo "docs size: $docs_size"
+          
+          # Gzip files if they exceed 1.99GB
+          if ((data_size > 1990000000)); then
+            gzip -r data/
+          fi
+          if ((docs_size > 1990000000)); then
+            gzip -r docs/
+          fi
+          
       - name: Commit and Push Changes
         if: steps.check_changes.outputs.changes == 'true'
         run: |
@@ -47,51 +64,3 @@ jobs:
           git config --local user.name "GitHub Action"
           git commit -m "Automated data update" data/*ld docs/rdf/*
           git push
-  run_nbs:
-    needs: fetch_data
-    runs-on: ubuntu-latest
-    name: Run notebooks
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.PAT }}   
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-          cache: 'pip'      
-      - name: Install Dependencies
-        run: | 
-          pip install jupyter
-      - name: Run notebooks
-        run: |
-          input_directory="src/main/notebooks/"
-          for notebook in $(ls $input_directory | grep ".*.ipynb"); do
-            new_filename=$(echo $notebook | sed -E 's|ipynb|md|')
-            echo $new_filename
-            echo $notebook
-            jupyter nbconvert --to markdown "$input_directory$notebook" 
-            mv $input_directory$new_filename docs/$new_filename
-          done
-      - name: Check for Changes
-        id: check_changes
-        run: |
-          if [[ -n $(git diff --exit-code docs/) ]]; then
-            echo "There are changes in the 'docs/' directory."
-            echo "::set-output name=changes::true"
-          else
-            echo "No changes in the 'docs/' directory. Skipping commit."
-            echo "::set-output name=changes::false"
-          fi
-
-      - name: Commit and Push Changes
-        if: steps.check_changes.outputs.changes == 'true'
-        run: |
-          git add docs/*
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git commit -m "Automated notebook run" docs/*
-          git push
-
