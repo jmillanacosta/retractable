@@ -86,9 +86,9 @@ def get_retracted_articles_epmc(query_url, article_url):
             source = item['@rdf:about'].split('/', 4)[-1].split('/')[0]
             id = item['@rdf:about'].split('/', 4)[-1].split('/')[1]
             article_url_i = article_url.format(source, id, 'json')
-            article_retract = make_request(article_url_i).json()['result']["commentCorrectionList"]["commentCorrection"][0]
-            retract_id = article_retract['id']
-            retract_source = article_retract['source']
+            article_retract = make_request(article_url_i).json().get('result', {}).get("commentCorrectionList", {}).get("commentCorrection", [])[0]
+            retract_id = article_retract.get('id', 'NA')
+            retract_source = article_retract.get('source', 'NA')
             retraction_url = article_url.format(retract_source, retract_id, 'dc')
             retraction_json = xmltodict.parse(make_request(retraction_url).text)['responseWrapper']
             item['retraction'] = retraction_json.get('rdf:RDF', {}).get('rdf:Description',{})
