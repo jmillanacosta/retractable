@@ -98,13 +98,18 @@ def get_retracted_articles_epmc(query_url, article_url):
                 except Exception as e:
                     print(f"No retraction for {retract_id}: {e}")
                     continue
-                if 'dcterms:abstract' in item['retraction'].keys():
-                    item['retraction'].pop('dcterms:abstract')
-                if 'retraction' in item['retraction'].keys():
-                    item['retraction'].pop('retraction')
-                retracted_articles_ePMC.extend([item])
-            except (IndexError, KeyError) as e:
-                print(f"Skipping item due to IndexError/KeyError: {e}")
+                try:
+                    if 'dcterms:abstract' in item['retraction'].keys():
+                        item['retraction'].pop('dcterms:abstract')
+                    if 'retraction' in item['retraction'].keys():
+                        item['retraction'].pop('retraction')
+                    retracted_articles_ePMC.extend([item])
+                except Exception as e:
+                    print(f'Skipping item due to {e}')
+                    
+            except Exception as e:
+                print(f"Skipping item due to {e}")
                 continue
+
 
     return retracted_articles_ePMC
