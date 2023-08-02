@@ -1,4 +1,4 @@
-![](https://www.jmillanacosta.com/retractable/assets/img/logo.png)
+[![](https://www.jmillanacosta.com/retractable/assets/img/logo.png)](https://www.jmillanacosta.com/retractable)
 ____
 
 [![Fetch data](https://github.com/jmillanacosta/retractable/actions/workflows/fetch_data.yml/badge.svg)](https://github.com/jmillanacosta/retractable/actions/workflows/fetch_data.yml)
