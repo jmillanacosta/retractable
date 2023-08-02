@@ -43,3 +43,18 @@ footer {
   }
 }
 
+/* Set round edges for all tables */
+table {
+  border-collapse: collapse;
+  border-radius: 10px;
+}
+
+/* Set the dark grey line color */
+table, th, td {
+  border: 1px solid #444;
+}
+
+/* Add some padding to the cells for better visual appearance */
+th, td {
+  padding: 10px;
+}
