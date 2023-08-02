@@ -18,91 +18,97 @@ techArticle:
   version: 1.0
 ---
 
-
 # RDF Schema Documentation for Retractable
 
 ## Introduction
 
-The Retractable RDF schema provides a structured way to describe papers, retracted papers, and retraction notices. This documentation covers the classes and properties defined in the schema and how they are intended to be used.
-Namespace
+The Retractable RDF schema provides a structured way to describe papers, retracted papers, retraction notices, retraction reasons, and more. This documentation covers the classes and properties defined in the schema and how they are intended to be used.
+
+## Namespace
 
 The schema uses the following namespace:
 
-| Namespace URI                                 | Prefix   |
-|-----------------------------------------------|----------|
-| https://www.jmillanacosta.com/retractable/schema# | retrct   |
+| Namespace URI                                          | Prefix          |
+|--------------------------------------------------------|-----------------|
+| https://www.jmillanacosta.com/retractable/schema#     | retrct_terms    |
 
-## [Classes](#Classes)
+## Classes
 
-### [RetractedPaper](#RetractedPaper)
+### RetractedPaper
 
-The `retrct:RetractedPaper` class represents a paper that has been retracted.
+The `retrct_terms:RetractedPaper` class represents a paper that has been retracted.
 
-| Property           | Description                                                                                                                            |
-|--------------------|----------------------------------------------------------------------------------------------------------------------------------------|
-| retrct:hasRetractionNotice         | Relates a retraction notice to its retracted paper|
+| Property                | Description                                              |
+|-------------------------|----------------------------------------------------------|
+| retrct_terms:hasRetractionNotice | Relates a retraction notice to its retracted paper     |
 
-### [RetractionNotice](#RetractionNotice)
+### RetractionNotice
 
-The `retrct:RetractionNotice` class represents a notice indicating the retraction of a paper.
+The `retrct_terms:RetractionNotice` class represents a notice indicating the retraction of a paper.
 
-| Property           | Description                                                                                                                            |
-|--------------------|----------------------------------------------------------------------------------------------------------------------------------------|
-| retrct:isRectractionNoticeOf         | Relates a retraction notice to its retracted paper|
+| Property                | Description                                              |
+|-------------------------|----------------------------------------------------------|
+| retrct_terms:isRetractionNoticeOf | Relates a retraction notice to its retracted paper     |
 
+### RetractionReason
 
+The `retrct_terms:RetractionReason` class represents one or more reasons stated for the retraction of a paper.
 
+| Property         | Description                                                      |
+|------------------|------------------------------------------------------------------|
+| cito:isConfirmedBy | Relates a retraction reason to its corresponding retraction     |
+| cito:refutes     | Relates a retraction reason to the retracted paper it refutes    |
 
-## [Object Properties](#ObjectProperties)
-### [hasRetractionNotice](#hasRetractionNotice)
+### Retraction
 
+The `retrct_terms:Retraction` class represents causally related entities to retractions.
 
-The `retrct:hasRetractionNotice` object property relates a retracted paper to its corresponding retraction notice.
+| Property         | Description                                                      |
+|------------------|------------------------------------------------------------------|
+| No specific properties defined for this class.                      |
 
-| Property           | Description                                                                                                                       |
-|--------------------|-----------------------------------------------------------------------------------------------------------------------------------|
-| rdfs:range         | "RetractionNotice" class  |
-| rdfs:domain         | "RetractedPaper" class  |
+## Object Properties
 
+### hasRetractionNotice
 
-### [isRetractionNoticeOf](#isRetractionNoticeOf)
+The `retrct_terms:hasRetractionNotice` object property relates a retracted paper to its corresponding retraction notice.
 
-The `retrct:isRetractionNoticeOf` object property is the inverse of `retrct:hasRetractionNotice`, relating a retraction notice to the publication it retracts.
+| Property                 | Description                                              |
+|--------------------------|----------------------------------------------------------|
+| rdfs:range               | `retrct_terms:RetractionNotice` class                   |
+| rdfs:domain              | `retrct_terms:RetractedPaper` class                     |
 
-| Property           | Description                                                                                                                       |
-|--------------------|-----------------------------------------------------------------------------------------------------------------------------------|
-| rdfs:range         | "RetractedPaper" class
-| rdfs:domain         | "RetractionNotice" class  |
+### isRetractionNoticeOf
 
-## [Usage](#Usage)
+The `retrct_terms:isRetractionNoticeOf` object property is the inverse of `retrct_terms:hasRetractionNotice`, relating a retraction notice to the publication it retracts.
 
-You can use the "Retract" schema to create RDF statements that describe academic papers, retracted papers, and retraction notices. For example:
+| Property                 | Description                                              |
+|--------------------------|----------------------------------------------------------|
+| rdfs:range               | `retrct_terms:RetractedPaper` class                     |
+| rdfs:domain              | `retrct_terms:RetractionNotice` class                   |
+
+## Usage
+
+You can use the "Retractable" schema to create RDF statements that describe academic papers, retracted papers, retraction notices, retraction reasons, and more. For example:
 
 ```turtle
-@prefix retrct: <https://www.jmillanacosta.com/retractable/schema#> .
+@prefix retrct_terms: <https://www.jmillanacosta.com/retractable/schema#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-```
-
-- Define a research paper
-
-```RDF
-<https://example.com/paper/123> a retrct:Paper ;
+<https://example.com/paper/123> a retrct_terms:Paper ;
     rdfs:label "Paper Title" ;
     dc:title "Paper Title" ;
-    dcterms:creator "John Doe" .
-```
-- Define a retracted paper
-
-```RDF
-<https://example.com/retracted/456> a retrct:RetractedPaper ;
+    dcterms:creator "Fulanito" .
+<https://example.com/retracted/456> a retrct_terms:RetractedPaper ;
     rdfs:label "Retracted Paper Title" ;
-    retrct:hasRetractionNotice <https://example.com/retractionNotice/789> .
-```
-
-- Define a retraction notice
-
-```RDF
-<https://example.com/retractionNotice/789> a retrct:RetractionNotice ;
+    retrct_terms:hasRetractionNotice <https://example.com/retractionNotice/789> .
+<https://example.com/retracted/456> a retrct_terms:RetractedPaper ;
+    rdfs:label "Retracted Paper Title" ;
+    retrct_terms:hasRetractionNotice <https://example.com/retractionNotice/789> .
+<https://example.com/retractionNotice/789> a retrct_terms:RetractionNotice ;
     rdfs:label "Retraction Notice Title" ;
     dcterms:description "..." .
-```
+<https://example.com/retractionReason/abc> a retrct_terms:RetractionReason ;
+    rdfs:label "Retraction Reason as stated" ;
+    cito:isConfirmedBy <https://example.com/retractionNotice/789> ;
+    cito:refutes <https://example.com/retracted/456> .
+``````
