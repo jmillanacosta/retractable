@@ -41,7 +41,7 @@ def make_rdf(input_json, existent_uri_file):
     g = Graph()
     # Add classes and properties
     RTT = Namespace("https://www.jmillanacosta.com/retractable/schema#")
-    RTRCT = Namespace("https://www.jmillanacosta.com/retractable/")
+    RTRCT = Namespace("https://www.jmillanacosta.com/retractable/retractable#")
     g.bind('dc', DC)
     g.bind('rdf', RDF)
     g.bind('foaf', FOAF)

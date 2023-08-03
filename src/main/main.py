@@ -35,7 +35,7 @@ def main():
                 # Execute get_retracted_articles() from get_epmc.py
                 epmc = get_retracted_articles_epmc(query_url, article_url)
                 # Save to json
-                with open('data/ePMC/retracts.json', 'w') as f:
+                with open('data/epmc/retracts.json', 'w') as f:
                     json.dump(epmc, f)
             else:
                 print("Query URL not found in the configuration file.")
