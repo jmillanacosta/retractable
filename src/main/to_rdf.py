@@ -49,63 +49,71 @@ def make_rdf(input_json, existent_uri_file):
     g.bind('retrct', RTRCT)
     g.bind('retrct_terms', RTT)
     g.parse(source='data/rdf/classes.ttl', format='turtle')
+    i=0
     for item in input_json:
-        about = item.get("@rdf:about")
-        seen.append(about)
-        if not about:
-            continue
-        # Assign an internal identifier to "@rdf:about" field
-        new_id = generate_uris(about, existent_uris)
-        # Update URIS DataFrame
-        row_data = pd.DataFrame([[about, new_id]], columns=['original','uri'])
-        existent_uris = pd.concat([existent_uris, row_data])
-        # Add the original value of "@rdf:about" as foaf:page
-        foaf_page = about
-        # Add to graph
-        g.add((RTRCT[new_id], URIRef("http://www.w3.org/2000/01/rdf-schema#about"), URIRef(f'https://www.jmillanacosta.com/retractable/{new_id}')))
-        g.add((RTRCT[new_id], FOAF.page, URIRef(foaf_page)))
-        g.add((RTRCT[new_id], RDF.type, RTT['RetractedPaper']))
-        # Retrieve the rest of the keys
-        rest = [key for key in list(item.keys()) if key not in ["@rdf:about"]]
-        for key in rest:
-            if ':' in key:
-                parts = key.split(":")
-                if 'dcterms' in key:
-                    predicate = DCTERMS[parts[1]]
-                if 'dc:' in key:
-                    predicate = DC[parts[1]]
-                    g.add((RTRCT[new_id], predicate, Literal(item[key])))
-        # Check for retraction and process it
         try:
-            retraction = item['retraction']
-            about_r = retraction.get("@rdf:about")
-            if about_r in seen:
+            about = item.get("@rdf:about")
+            seen.append(about)
+            if not about:
                 continue
-            foaf_page_r = about_r
-            if not about_r:
-                raise Exception("Missing '@rdf:about' in retraction")
-            # Assign an internal identifier to "@rdf:about" field in retraction
-            new_id_r = generate_uris(about_r, existent_uris)
-            row_data = pd.DataFrame([[about_r, new_id_r]], columns=['original','uri'])
-            # Update URIs DataFrame 
+            # Assign an internal identifier to "@rdf:about" field
+            new_id = generate_uris(about, existent_uris)
+            # Update URIS DataFrame
+            row_data = pd.DataFrame([[about, new_id]], columns=['original','uri'])
             existent_uris = pd.concat([existent_uris, row_data])
+            # Add the original value of "@rdf:about" as foaf:page
+            foaf_page = about
             # Add to graph
-            g.add((RTRCT[new_id_r], RDF.type, RTT['RetractionNotice']))
-            g.add((RTRCT[new_id_r], URIRef("http://www.w3.org/2000/01/rdf-schema#about"), URIRef(f'https://www.jmillanacosta.com/retractable/{new_id_r}')))
-            g.add((RTRCT[new_id_r], FOAF.page, URIRef(foaf_page_r)))
-            g.add((RTRCT[new_id_r], RTT['isRetractionNoticeOf'], URIRef(f'https://www.jmillanacosta.com/retractable/{new_id}')))
-            g.add((RTRCT[new_id], RTT['hasRetractionNotice'], URIRef(f'https://www.jmillanacosta.com/retractable/{new_id_r}')))
-            rest = [key for key in list(retraction.keys()) if key not in ["@rdf:about"]]
-            for key in rest:
-                if ':' in key:
-                    parts = key.split(":")
-                    if 'dcterms' in key:
-                        predicate = DCTERMS[parts[1]]
-                    if 'dc:' in key:
-                        predicate = DC[parts[1]]
-                        g.add((RTRCT[new_id_r], predicate, Literal(retraction[key])))
-        except KeyError:
-            pass
+            g.add((RTRCT[new_id], URIRef("http://www.w3.org/2000/01/rdf-schema#about"), URIRef(f'https://www.jmillanacosta.com/retractable/{new_id}')))
+            g.add((RTRCT[new_id], FOAF.page, URIRef(foaf_page)))
+            g.add((RTRCT[new_id], RDF.type, RTT['RetractedPaper']))
+            # Retrieve the rest of the keys
+            rest = [key for key in list(item.keys()) if key not in ["@rdf:about"]]
+            if len(rest) != 0:
+                for key in rest:
+                    if ':' in key:
+                        parts = key.split(":")
+                        if 'dcterms' in key:
+                            predicate = DCTERMS[parts[1]]
+                        if 'dc:' in key:
+                            predicate = DC[parts[1]]
+                            g.add((RTRCT[new_id], predicate, Literal(item[key])))
+            # Check for retraction and process it
+            try:
+                retraction = item['retraction']
+                about_r = retraction.get("@rdf:about")
+                if about_r in seen:
+                    continue
+                foaf_page_r = about_r
+                if not about_r:
+                    raise Exception("Missing '@rdf:about' in retraction")
+                # Assign an internal identifier to "@rdf:about" field in retraction
+                new_id_r = generate_uris(about_r, existent_uris)
+                row_data = pd.DataFrame([[about_r, new_id_r]], columns=['original','uri'])
+                # Update URIs DataFrame 
+                existent_uris = pd.concat([existent_uris, row_data])
+                # Add to graph
+                g.add((RTRCT[new_id_r], RDF.type, RTT['RetractionNotice']))
+                g.add((RTRCT[new_id_r], URIRef("http://www.w3.org/2000/01/rdf-schema#about"), URIRef(f'https://www.jmillanacosta.com/retractable/{new_id_r}')))
+                g.add((RTRCT[new_id_r], FOAF.page, URIRef(foaf_page_r)))
+                g.add((RTRCT[new_id_r], RTT['isRetractionNoticeOf'], URIRef(f'https://www.jmillanacosta.com/retractable/{new_id}')))
+                g.add((RTRCT[new_id], RTT['hasRetractionNotice'], URIRef(f'https://www.jmillanacosta.com/retractable/{new_id_r}')))
+                rest = [key for key in list(retraction.keys()) if key not in ["@rdf:about"]]
+                if len(rest) != 0:
+                    for key in rest:
+                        if ':' in key:
+                            parts = key.split(":")
+                            if 'dcterms' in key:
+                                predicate = DCTERMS[parts[1]]
+                            if 'dc:' in key:
+                                predicate = DC[parts[1]]
+                                g.add((RTRCT[new_id_r], predicate, Literal(retraction[key])))
+                print(f'{i} resources added to retractable RDF')
+                i +=1
+            except Exception as e:
+                print(f'Exception {e}\tSkipping item')
+        except Exception as e:
+            print(f'Exception {e}\tSkipping item')
     print('Saving to json-ld...')
     g.serialize(format='json-ld', destination='data/retractable.jsonld') 
     print('\t- data/retractable.jsonld saved')
