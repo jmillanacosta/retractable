@@ -39,23 +39,7 @@ jobs:
             echo "No changes in the 'data/ or docs/' directories. Skipping commit."
             echo "::set-output name=changes::false"
           fi
-      - name: Compress Files if Exceeds 1.99GB
-        if: steps.check_changes.outputs.changes == 'true'
-        run: |
-          # Check file sizes
-          data_size=$(du -sb data/ | cut -f1)
-          docs_size=$(du -sb docs/ | cut -f1)
-          echo "data size: $data_size"
-          echo "docs size: $docs_size"
-          
-          # Gzip files if they exceed 1.99GB
-          if ((data_size > 1990000000)); then
-            gzip -r data/
-          fi
-          if ((docs_size > 1990000000)); then
-            gzip -r docs/
-          fi
-          
+
       - name: Commit and Push Changes
         if: steps.check_changes.outputs.changes == 'true'
         run: |
