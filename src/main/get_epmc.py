@@ -100,7 +100,13 @@ def get_retracted_articles_epmc(query_url, article_url):
                 except Exception as e:
                     print(f"Skipping item due to {e}")
                 try:
-                    item['retraction'] = retraction_json.get('rdf:RDF', {}).get('rdf:Description', {})
+                    rdf_retract = retraction_json.get('rdf:RDF', None)
+                    if rdf_retract is not None:
+                        retraction = rdf_retract.get('rdf:Description', None)
+                        if retraction is not None:
+                            item[retraction] = retraction
+                        else:
+                            print("No retraction found")
                 except Exception as e:
                     print(f"No retraction for {retract_id}: {e}")
                     continue
