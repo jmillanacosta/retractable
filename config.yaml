@@ -1,5 +1,5 @@
 sources:
-  ePMC:
+  epmc:
     query_url: 'https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=PUB_TYPE%3A%22Retracted%20Publication%22&resultType=core&cursorMark={}&pageSize={}&format={}'
     article_url: https://www.ebi.ac.uk/europepmc/webservices/rest/article/{}/{}?resultType=core&format={}
 products:
