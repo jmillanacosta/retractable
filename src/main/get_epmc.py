@@ -38,13 +38,13 @@ def get_retracted_articles_epmc(query_url, article_url):
     Get retracted articles from Europe PMC and save them to files.
 
     Args:
-        query_url (str): The EuropePMC API URL for searching
-        article_url (str): The EuropePMC API URL for an article
+        query_url (str): The Europepmc API URL for searching
+        article_url (str): The Europepmc API URL for an article
     """
     url = query_url
     global cursor_mark
     # Initialize the list to store retracted articles
-    retracted_articles_ePMC = []
+    retracted_articles_epmc = []
 
     print("Performing an initial request to Europe PMC to get the list of retracted papers")
     # Make the initial request to get the total number of results
@@ -109,7 +109,7 @@ def get_retracted_articles_epmc(query_url, article_url):
                         item['retraction'].pop('dcterms:abstract')
                     if 'retraction' in item['retraction'].keys():
                         item['retraction'].pop('retraction')
-                    retracted_articles_ePMC.extend([item])
+                    retracted_articles_epmc.extend([item])
                 except Exception as e:
                     print(f'Skipping item due to {e}')
                     
@@ -118,4 +118,4 @@ def get_retracted_articles_epmc(query_url, article_url):
                 continue
 
 
-    return retracted_articles_ePMC
+    return retracted_articles_epmc
