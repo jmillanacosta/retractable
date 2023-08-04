@@ -74,7 +74,10 @@ def get_retracted_articles_epmc(query_url, article_url):
             continue
         o = xmltodict.parse(response.text)
         dict_response = o['responseWrapper']
-        result = dict_response.get('rdf:RDF', {}).get('rdf:Description', {})
+        try:
+            result = dict_response.get('rdf:RDF', {}).get('rdf:Description', {})
+        except Exception as e:
+            print(f"Skipping item due to {e}")
         j += 1
 
         for item in result:
@@ -92,7 +95,10 @@ def get_retracted_articles_epmc(query_url, article_url):
                 retract_id = article_retract.get('id', 'NA')
                 retract_source = article_retract.get('source', 'NA')
                 retraction_url = article_url.format(retract_source, retract_id, 'dc')
-                retraction_json = xmltodict.parse(make_request(retraction_url).text)['responseWrapper']
+                try:
+                    retraction_json = xmltodict.parse(make_request(retraction_url).text)['responseWrapper']
+                except Exception as e:
+                    print(f"Skipping item due to {e}")
                 try:
                     item['retraction'] = retraction_json.get('rdf:RDF', {}).get('rdf:Description', {})
                 except Exception as e:
