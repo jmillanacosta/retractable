@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+title: Retractable
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Javier
+    family-names: Millán Acosta
+    email: javier.millanacosta@maastrichtuniversity.nl
+    affiliation: Maastricht University
+    orcid: 'https://orcid.org/0000-0002-4166-7093'
+repository-code: 'https://github.com/jmillanacosta/retractable'
+url: 'https://www.jmillanacosta.com/retractable'
+license: CC0-1.0
