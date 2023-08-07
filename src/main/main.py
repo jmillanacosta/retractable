@@ -43,11 +43,14 @@ def main():
                     article_url = config['sources']['epmc']['article_url']
                     print(f'Query URL: {query_url}\n')
                     if query_url:
-                        # Execute get_retracted_articles() from get_epmc.py
+                        # Execute get_retracted_articles_epmc() from get_epmc.py
                         epmc = get_retracted_articles_epmc(query_url, article_url)
+                        print('Done looking for articles')
                         # Save to json
+                        print('Saving to data/epmc/retracts.json')
                         with open('data/epmc/retracts.json', 'w') as f:
                             json.dump(epmc, f)
+                            print('Saved.')
                     else:
                         print("Query URL not found in the configuration file.")
                         exit(1)
@@ -59,6 +62,7 @@ def main():
         json_all = []
         for source in config['sources']:
             try:
+                logging(f'Saving data for source: {source}')
                 json_source = load_json(source)
                 json_all.extend(json_source)
             except Exception as e:
