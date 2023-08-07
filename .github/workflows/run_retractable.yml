@@ -1,4 +1,4 @@
-name: Fetch
+name: run_retractable
 
 on:
   pull_request:
@@ -50,7 +50,7 @@ jobs:
   RDF_data:
     needs: fetch_data
     runs-on: ubuntu-latest
-    name: Fetch data
+    name: RDFy data
     permissions:
       contents: write
     steps:
