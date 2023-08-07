@@ -2,7 +2,7 @@ name: Fetch
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: ["${GITHUB_REF##*/}"]
   schedule:
     - cron: "0 9 * * MON"
   workflow_dispatch:
