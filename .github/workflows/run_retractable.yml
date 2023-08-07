@@ -28,24 +28,13 @@ jobs:
           pip install -r requirements.txt
       - name: Run retractable
         run: python src/main/main.py --command fetch --sources epmc
-      - name: Check for Changes
-        id: check_changes
-        run: |
-          if [[ -n $(git diff --exit-code data/) ]]; then
-            echo "There are changes in the 'data/' directories."
-            echo "::set-output name=changes::true"
-          else
-            echo "No changes in the 'data/' directories. Skipping commit."
-            echo "::set-output name=changes::false"
-          fi
-
       - name: Commit and Push Changes
         if: steps.check_changes.outputs.changes == 'true'
         run: |
-          git add data/*
+          git add --all
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m "Automated data update" data/*ld
+          git commit -m "Actions - fetch_data" -all
           git push
   RDF_data:
     needs: fetch_data
@@ -68,23 +57,10 @@ jobs:
           pip install -r requirements.txt
       - name: Run retractable
         run: python src/main/main.py --command RDF --sources all
-      - name: Check for Changes
-        id: check_changes
-        run: |
-          cp -f data/rdf/retractable.ttl docs/rdf/retractable.ttl
-          if [[ -n $(git diff --exit-code data/ docs/) ]]; then
-            echo "There are changes in the 'data/ or docs/' directories."
-            echo "::set-output name=changes::true"
-          else
-            echo "No changes in the 'data/ or docs/' directories. Skipping commit."
-            echo "::set-output name=changes::false"
-          fi
-
       - name: Commit and Push Changes
-        if: steps.check_changes.outputs.changes == 'true'
         run: |
-          git add data/*ld docs/rdf/*ttl 
+          git add --all
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m "Automated data update" data/*ld docs/rdf/*
+          git commit -m "Actions - RDFy data" --all
           git push
