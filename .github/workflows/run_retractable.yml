@@ -2,7 +2,7 @@ name: Fetch
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: ${GITHUB_REF##*/}
   schedule:
     - cron: "0 9 * * MON"
   workflow_dispatch:
@@ -27,7 +27,47 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
       - name: Run retractable
-        run: python src/main/main.py
+        run: python src/main/main.py --command fetch --sources epmc
+      - name: Check for Changes
+        id: check_changes
+        run: |
+          if [[ -n $(git diff --exit-code data/) ]]; then
+            echo "There are changes in the 'data/' directories."
+            echo "::set-output name=changes::true"
+          else
+            echo "No changes in the 'data/' directories. Skipping commit."
+            echo "::set-output name=changes::false"
+          fi
+
+      - name: Commit and Push Changes
+        if: steps.check_changes.outputs.changes == 'true'
+        run: |
+          git add data/*
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "Automated data update" data/*ld
+          git push
+  RDF_data:
+    needs: fetch_data
+    runs-on: ubuntu-latest
+    name: Fetch data
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT }}   
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'      
+      - name: Install Dependencies
+        run: | 
+          pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run retractable
+        run: python src/main/main.py --command RDF --sources all
       - name: Check for Changes
         id: check_changes
         run: |
