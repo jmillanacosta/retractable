@@ -31,16 +31,19 @@ TBD
 If you use the software, please cite as below:
 
 ### Retractable
+```
 @software{Millan_Acosta_Retractable,
 author = {Millán Acosta, Javier},
 license = {CC0-1.0},
 title = {{Retractable}},
 url = {https://github.com/jmillanacosta/retractable}
 }
+```
 
 If you use the data, please cite also the sources:
 
-### EuropePMC
+- EuropePMC
+
 ```
 @article{ferguson_europe_2021,
 	title = {Europe {PMC} in 2020},
@@ -60,5 +63,3 @@ If you use the data, please cite also the sources:
 	pmcid = {PMC7778976},
 }
 ```
-
-If you use the software,please cite it as below:
