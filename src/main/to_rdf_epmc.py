@@ -26,7 +26,7 @@ def generate_uris(original_uri, existent_uris):
 
         return uri_identifier
 
-def make_rdf(input_json, existent_uri_file):
+def make_rdf_epmc(input_json, existent_uri_file):
     seen = []
     # Get existent uris
     try:
