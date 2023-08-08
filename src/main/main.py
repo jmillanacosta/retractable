@@ -62,7 +62,7 @@ def main():
         json_all = []
         for source in config['sources']:
             try:
-                logging(f'Saving data for source: {source}')
+                print(f'Saving data for source: {source}')
                 json_source = load_json(source)
                 json_all.extend(json_source)
             except Exception as e:
@@ -77,7 +77,7 @@ def main():
         try:
             json_all = load_json('data/data.json')
         except FileNotFoundError:
-            print('No data to RDFy - fetch data first')
+            logging.error('No data to RDFy - fetch data first')
         for source in args.sources:
             if source in config['sources']:
                 if source == 'epmc':
