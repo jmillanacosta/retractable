@@ -39,8 +39,7 @@ def get_retraction_info(article_url, source, id):
     return None
 
 def get_retracted_articles_epmc(query_url, article_url):
-    global cursor_mark
-    url = query_url.format(cursor_mark, "1", format_type)
+    url = query_url.format("*", "1", format_type)
     retracted_articles_epmc = []
 
     response = make_request(url)
