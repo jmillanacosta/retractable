@@ -22,9 +22,13 @@ def make_request(url):
 
 def get_retraction_info(article_url, source, id):
     try:
-        print(f'Fetching retraction data for {id}')
+        print(f'Fetching retraction data for {source}{id}')
         article_url_i = article_url.format(source, id, 'json')
-        article_retract = make_request(article_url_i).json().get('result', {}).get("commentCorrectionList", {}).get("commentCorrection", [])[0]
+        try:
+            article_retract = make_request(article_url_i).json().get('result', {}).get("commentCorrectionList", {}).get("commentCorrection", [])[0]
+        except AttributeError as e:
+            print(f'Skipping item {source}{id} due to {e}')
+            return None
         retract_id = article_retract.get('id', 'NA')
         retract_source = article_retract.get('source', 'NA')
         retraction_url = article_url.format(retract_source, retract_id, 'dc')
@@ -36,7 +40,7 @@ def get_retraction_info(article_url, source, id):
             if retraction is not None:
                 return retraction
     except Exception as e:
-        print(f"No retraction for {retract_id}: {e}")
+        print(f"No retraction for {source}{id}: {e}")
     return None
 
 def get_retracted_articles_epmc(query_url, article_url):
