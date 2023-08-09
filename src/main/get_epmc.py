@@ -22,6 +22,7 @@ def make_request(url):
 
 def get_retraction_info(article_url, source, id):
     try:
+        print(f'Fetching retraction data for {id}')
         article_url_i = article_url.format(source, id, 'json')
         article_retract = make_request(article_url_i).json().get('result', {}).get("commentCorrectionList", {}).get("commentCorrection", [])[0]
         retract_id = article_retract.get('id', 'NA')
@@ -53,7 +54,6 @@ def get_retracted_articles_epmc(query_url, article_url):
 
     with ThreadPoolExecutor() as executor:
         futures = []
-
         for i in range(num_requests):
             cursor_mark = dict_response.get('nextCursorMark')
             if cursor_mark is None:
@@ -65,23 +65,31 @@ def get_retracted_articles_epmc(query_url, article_url):
                 continue
             o = xmltodict.parse(response.text)
             dict_response = o['responseWrapper']
-            result = dict_response.get('rdf:RDF', {}).get('rdf:Description', [])
+            if dict_response != None:
+                result = dict_response.get('rdf:RDF', {}).get('rdf:Description', [])
 
-            for item in result:
-                try:
-                    if 'dcterms:abstract' in item.keys():
-                        item.pop('dcterms:abstract')
-                    
-                    source = item['@rdf:about'].split('/', 4)[-1].split('/')[0]
-                    id = item['@rdf:about'].split('/', 4)[-1].split('/')[1]
-                    futures.append(executor.submit(get_retraction_info, article_url, source, id))
-                except Exception as e:
-                    print(f"Skipping item due to {e}")
+                for item in result:
+                    try:
+                        if 'dcterms:abstract' in item.keys():
+                            item.pop('dcterms:abstract')
 
+                        source = item['@rdf:about'].split('/', 4)[-1].split('/')[0]
+                        id = item['@rdf:about'].split('/', 4)[-1].split('/')[1]
+                        futures.append(executor.submit(get_retraction_info,article_url, source, id))
+                        
+                    except Exception as e:
+                        print(f"Skipping item due to {e}")
+        j = 0
         for future in futures:
-            retraction = future.result()
-            if retraction:
-                item['retraction'] = retraction
-                retracted_articles_epmc.append(item)
+            if future.result():
+                print(f'Processing retraction number {j}')
+                j+=1
+                retraction = future.result()
+                if retraction:
+                    item['retraction'] = retraction
+                    retracted_articles_epmc.append(item)
+                else:
+                    print(f'\t\t\t\t\t -- no retraction', end='\r')
+                    print("\n")
 
     return retracted_articles_epmc

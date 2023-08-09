@@ -29,7 +29,6 @@ jobs:
       - name: Run retractable
         run: python src/main/main.py --command fetch --sources epmc
       - name: Commit and Push Changes
-        if: steps.check_changes.outputs.changes == 'true'
         run: |
           git add --all
           git config --local user.email "action@github.com"
