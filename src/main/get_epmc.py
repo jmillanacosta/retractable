@@ -66,7 +66,11 @@ def get_retracted_articles_epmc(query_url, article_url):
             o = xmltodict.parse(response.text)
             dict_response = o['responseWrapper']
             if dict_response != None:
-                result = dict_response.get('rdf:RDF', {}).get('rdf:Description', [])
+                try:
+                    result = dict_response.get('rdf:RDF', {}).get('rdf:Description', [])
+                except AttributeError as e:
+                    print(f'Skipping item due to {e}')
+                    continue
 
                 for item in result:
                     try:
