@@ -33,7 +33,7 @@ jobs:
           git add --all
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m "Actions - fetch_data" -all
+          git commit -m "Actions - fetch_data" --all
           git push
   RDF_data:
     needs: fetch_data
