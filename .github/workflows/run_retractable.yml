@@ -32,10 +32,25 @@ jobs:
         run: |
           cd data/
           git add .
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git commit -m "Automated data retrieval"
-          git push || true
+      
+          # Check if there are changes to commit
+          if git diff-index --quiet HEAD --; then
+            echo "No changes to commit."
+          else
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git commit -m "Automated data retrieval" || true
+          fi
+      
+          # Check if there are changes to push
+          if [[ $(git rev-parse --abbrev-ref HEAD) == "main" ]]; then
+            if [ -n "$(git cherry -v)" ]; then
+              git push || echo "Push failed."
+            else
+              echo "No changes to push."
+            fi
+          fi
+
   RDF_data:
     needs: fetch_data
     runs-on: ubuntu-latest
@@ -61,9 +76,26 @@ jobs:
           python src/main/main.py --command RDF --sources epmc
       - name: Commit and Push Changes
         run: |
+      - name: Commit and Push Changes
+        run: |
           cp data/rdf/retractable.ttl docs/rdf/retractable.ttl
           git add data/retractable.jsonld docs/rdf/retractable.ttl data/uris/uris.csv data/rdf/*
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m "Automated RDF generation" || echo "No changes to commit."
-          git push || echo "Push failed."
+      
+          # Check if there are changes to commit
+          if git diff-index --quiet HEAD --; then
+            echo "No changes to commit."
+          else
+            git commit -m "Automated RDF generation" || true
+          fi
+      
+          # Check if there are changes to push
+          if [[ $(git rev-parse --abbrev-ref HEAD) == "main" ]]; then
+            if [ -n "$(git cherry -v)" ]; then
+              git push || echo "Push failed."
+            else
+              echo "No changes to push."
+            fi
+          fi
+      
