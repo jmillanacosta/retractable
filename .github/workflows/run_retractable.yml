@@ -56,7 +56,7 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
       - name: Run retractable
-        run: python src/main/main.py --command RDF --sources all
+        run: python src/main/main.py --command RDF --sources epmc
       - name: Commit and Push Changes
         run: |
           cp data/rdf/retractable.ttl docs/rdf/retractable.ttl
