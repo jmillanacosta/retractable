@@ -56,11 +56,12 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
       - name: Run retractable
-        run: python src/main/main.py --command RDF --sources epmc
+        run: |
+          git pull
+          python src/main/main.py --command RDF --sources epmc
       - name: Commit and Push Changes
         run: |
           cp data/rdf/retractable.ttl docs/rdf/retractable.ttl
-          git pull
           git add data/retractable.jsonld docs/rdf/retractable.ttl data/uris/uris.csv data/rdf/*
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
