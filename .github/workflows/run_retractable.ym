@@ -1,4 +1,4 @@
-name: run_retractable
+name: run retractable
 
 on:
   pull_request:
