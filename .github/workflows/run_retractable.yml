@@ -30,10 +30,11 @@ jobs:
         run: python src/main/main.py --command fetch --sources epmc
       - name: Commit and Push Changes
         run: |
-          git add --all
+          cd data/
+          git add .
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m "Actions - fetch_data" --all
+          git commit -m "Automated data retrieval"
           git push
   RDF_data:
     needs: fetch_data
@@ -58,9 +59,10 @@ jobs:
         run: python src/main/main.py --command RDF --sources all
       - name: Commit and Push Changes
         run: |
+          cp data/retractable.ttl docs/rdf/retractable.ttl
           git pull
-          git add --all
+          git add data/retractable.jsonld docs/rdf/retractable.ttl data/uris/uris.csv
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m "Actions - RDFy data" --all
+          git commit -m "Automated RDF generation"
           git push
