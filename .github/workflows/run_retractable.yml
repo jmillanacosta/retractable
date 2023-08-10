@@ -65,5 +65,5 @@ jobs:
           git add data/retractable.jsonld docs/rdf/retractable.ttl data/uris/uris.csv data/rdf/*
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m "Automated RDF generation"
-          git push || true
+          git commit -m "Automated RDF generation" || echo "No changes to commit."
+          git push || echo "Push failed."
