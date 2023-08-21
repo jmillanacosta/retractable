@@ -5,9 +5,18 @@ import json
 from rdflib import Graph, RDF, RDFS, FOAF, DC, Namespace, URIRef, Literal, OWL, DCTERMS
 from rdflib.serializer import Serializer
 
-def generate_uris(original_uri, existent_uris):
-    # Convert 'existent_uris'['original'] to a list to perform the comparison
-    if original_uri in existent_uris['original'].tolist():
+
+def generate_uris(original_uri, existent_uris_file):
+    # Load existing URIs DataFrame from the file
+    try:
+        existent_uris = pd.read_csv(existent_uris_file)
+    except pd.errors.EmptyDataError:
+        existent_uris = pd.DataFrame(columns=['uri', 'original'])
+
+    # Convert 'existent_uris'['original'] to a set for faster membership checks
+    existing_original_uris = set(existent_uris['original'])
+
+    if original_uri in existing_original_uris:
         # Filter the DataFrame to get the 'uri' where 'original' matches 'original_uri'
         uri = existent_uris.loc[existent_uris['original'] == original_uri, 'uri'].values[0]
         return uri
@@ -15,16 +24,30 @@ def generate_uris(original_uri, existent_uris):
         # Generate a unique hash for the original URI using SHA-256
         hash_value = hashlib.sha256(original_uri.encode()).hexdigest()
 
+        # Append the original URI to the hash to increase uniqueness
+        unique_hash_value = f"{hash_value}{original_uri}"
+
         # Take the first 8 characters from the hash as the identifier
-        uri_identifier = hash_value[:8]
+        uri_identifier = unique_hash_value[:8]
 
         # Ensure the identifier is unique by appending a numeric suffix if necessary
         count = 1
-        while uri_identifier in existent_uris['uri'].tolist():  # Also, check for 'uri' in the list
-            uri_identifier = f"{hash_value[:7]}{count:02d}"
+        while uri_identifier in set(existent_uris['uri']):
+            print('aa')
+            uri_identifier = f"{unique_hash_value[:7]}{count:02d}"
             count += 1
 
+        # Add new URI information to the DataFrame
+        new_row = {'original': original_uri, 'uri': uri_identifier}
+        existent_uris = pd.concat([existent_uris, pd.DataFrame([new_row])], ignore_index=True)
+
+        # Save the updated existent_uris DataFrame to the file
+        existent_uris.to_csv(existent_uris_file, index=False)
+        print(f'Len{len(existent_uris)}')
+
         return uri_identifier
+
+
 
 def make_rdf_epmc(input_json, existent_uri_file):
     seen = []
@@ -51,16 +74,16 @@ def make_rdf_epmc(input_json, existent_uri_file):
     g.parse(source='data/rdf/classes.ttl', format='turtle')
     i=0
     for item in input_json:
+        print(item)
         try:
             about = item.get("@rdf:about")
             seen.append(about)
             if not about:
                 continue
             # Assign an internal identifier to "@rdf:about" field
-            new_id = generate_uris(about, existent_uris)
-            # Update URIS DataFrame
-            row_data = pd.DataFrame([[about, new_id]], columns=['original','uri'])
-            existent_uris = pd.concat([existent_uris, row_data])
+            new_id = generate_uris(about, existent_uri_file)
+            print(about)
+
             # Add the original value of "@rdf:about" as foaf:page
             foaf_page = about
             # Add to graph
@@ -88,10 +111,7 @@ def make_rdf_epmc(input_json, existent_uri_file):
                 if not about_r:
                     raise Exception("Missing '@rdf:about' in retraction")
                 # Assign an internal identifier to "@rdf:about" field in retraction
-                new_id_r = generate_uris(about_r, existent_uris)
-                row_data = pd.DataFrame([[about_r, new_id_r]], columns=['original','uri'])
-                # Update URIs DataFrame 
-                existent_uris = pd.concat([existent_uris, row_data])
+                new_id_r = generate_uris(about_r, existent_uri_file)
                 # Add to graph
                 g.add((RTRCT[new_id_r], RDF.type, RTT['RetractionNotice']))
                 g.add((RTRCT[new_id_r], URIRef("http://www.w3.org/2000/01/rdf-schema#about"), URIRef(f'https://www.jmillanacosta.com/retractable/{new_id_r}')))
@@ -108,7 +128,7 @@ def make_rdf_epmc(input_json, existent_uri_file):
                             if 'dc:' in key:
                                 predicate = DC[parts[1]]
                                 g.add((RTRCT[new_id_r], predicate, Literal(retraction[key])))
-                print(f'{i} resources added to retractable RDF')
+                print(f'{i} resources added to retractable RDF, len:{len(g)}, uri:{new_id_r}!{new_id}')
                 i +=1
             except Exception as e:
                 print(f'Exception {e}\tSkipping item')

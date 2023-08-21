@@ -93,7 +93,9 @@ def get_retracted_articles_epmc(query_url, article_url):
                 print(f'Processing retraction number {j}')
                 j+=1
                 retraction = future.result()
+                print(retraction)
                 if retraction:
+                    item = {}
                     item['retraction'] = retraction
                     retracted_articles_epmc.append(item)
                 else:
