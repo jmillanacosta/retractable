@@ -1,12 +1,8 @@
 @prefix cito: <http://purl.org/spar/cito> .
-@prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix obo: <http://purl.obolibrary.org/obo> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix retrct: <https://www.jmillanacosta.com/retractable/retractable#> .
-@prefix retrct1: <https://www.jmillanacosta.com/retractable/> .
 @prefix retrct_terms: <https://www.jmillanacosta.com/retractable/schema#> .
 @prefix wd: <http://www.wikidata.org/entity/> .
 
@@ -15,31 +11,6 @@ obo:RO_0002410 a owl:Class ;
 
 cito:confirms a owl:Class ;
     rdfs:label "confirms" .
-
-retrct:b52683e1 a retrct_terms:RetractedPaper ;
-    dc:creator "['Lambert, PW', 'DeOreo, PB', 'Hollis, BW', 'Fu, IY', 'Ginsberg, DJ', 'Roos, BA']" ;
-    dc:date "1981-10-01" ;
-    dc:description "Retracted Publication; Research Support, U.S. Gov't, P.H.S.; Research Support, Non-U.S. Gov't; Research Support, U.S. Gov't, Non-P.H.S.; Journal Article" ;
-    dc:identifier "http://europepmc.org/abstract/MED/6270222" ;
-    dc:language "eng" ;
-    dc:subject "Nephrectomy" ;
-    dc:title "Concurrent measurement of plasma levels of vitamin D3 and five of its metabolites in normal humans, chronic renal failure patients, and anephric subjects." ;
-    dc:type "Text" ;
-    rdfs:about retrct1:b52683e1 ;
-    foaf:page <http://europepmc.org/abstract/MED/6270222> ;
-    retrct_terms:hasRetractionNotice retrct1:f43a5659 .
-
-retrct:f43a5659 a retrct_terms:RetractionNotice ;
-    dc:creator "['Lambert, PW', 'DeOreo, PB', 'Hollis, B', 'Fu, IY', 'Ginsberg, DJ', 'Roos, B', 'Behrman, RE']" ;
-    dc:date "1984-10-01" ;
-    dc:description "Retraction of Publication" ;
-    dc:identifier "http://europepmc.org/abstract/MED/6384395" ;
-    dc:language "eng" ;
-    dc:title "Retraction: Concurrent measurements of plasma levels of vitamin D3 and five of its metabolites in normal humans, chronic renal failure patients, and anephric subjects." ;
-    dc:type "Text" ;
-    rdfs:about retrct1:f43a5659 ;
-    foaf:page <http://europepmc.org/abstract/MED/6384395> ;
-    retrct_terms:isRetractionNoticeOf retrct1:b52683e1 .
 
 retrct_terms:RetractionReason a owl:Class ;
     rdfs:label "retraction reason" ;
@@ -70,12 +41,6 @@ retrct_terms:isRetractionNoticeOf a owl:ObjectProperty ;
     rdfs:range retrct_terms:RetractedPaper ;
     owl:sameAs cito:retracts .
 
-retrct_terms:Retraction a owl:Class ;
-    rdfs:label "Retraction" ;
-    cito:confirms retrct_terms:Retraction ;
-    rdfs:comment "A retraction is the cause of a paper being retracted. Not all retractions involve or can be linked to retraction notices." ;
-    owl:sameAs wd:Q45203135 .
-
 retrct_terms:RetractionNotice a owl:Class ;
     rdfs:label "Retraction Notice" ;
     cito:discusses retrct_terms:Retraction ;
@@ -97,4 +62,10 @@ retrct_terms:RetractedPaper a owl:Class ;
             owl:someValuesFrom retrct_terms:RetractionNotice ],
         retrct_terms:Paper ;
     owl:sameAs wd:Q45182324 .
+
+retrct_terms:Retraction a owl:Class ;
+    rdfs:label "Retraction" ;
+    cito:confirms retrct_terms:Retraction ;
+    rdfs:comment "A retraction is the cause of a paper being retracted. Not all retractions involve or can be linked to retraction notices." ;
+    owl:sameAs wd:Q45203135 .
 
