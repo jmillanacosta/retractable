@@ -1,5 +1,6 @@
 [
   {
+<<<<<<< HEAD
     "@id": "http://purl.org/spar/citoconfirms",
     "@type": [
       "http://www.w3.org/2002/07/owl#Class"
@@ -7,6 +8,221 @@
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
         "@value": "confirms"
+=======
+    "@id": "https://www.jmillanacosta.com/retractable/schema#RetractionNotice",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://purl.org/spar/citodiscusses": [
+      {
+        "@id": "https://www.jmillanacosta.com/retractable/schema#Retraction"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "A notice indicating the retraction of a paper."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Retraction Notice"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "http://purl.org/dc/terms/BibliographicResource"
+      },
+      {
+        "@id": "_:na232ff1bf10f4033a9d5918ba9e817c2b2"
+      },
+      {
+        "@id": "_:na232ff1bf10f4033a9d5918ba9e817c2b3"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#sameAs": [
+      {
+        "@id": "http://www.wikidata.org/entity/Q7316896"
+      }
+    ]
+  },
+  {
+    "@id": "_:na232ff1bf10f4033a9d5918ba9e817c2b2",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Restriction"
+    ],
+    "http://www.w3.org/2002/07/owl#onProperty": [
+      {
+        "@id": "http://purl.org/spar/citoconfirms:"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#someValuesFrom": [
+      {
+        "@id": "https://www.jmillanacosta.com/retractable/schema#Retraction"
+      }
+    ]
+  },
+  {
+    "@id": "_:na232ff1bf10f4033a9d5918ba9e817c2b3",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Restriction"
+    ],
+    "http://www.w3.org/2002/07/owl#onProperty": [
+      {
+        "@id": "https://www.jmillanacosta.com/retractable/schema#isRetractionNoticeOf:"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#someValuesFrom": [
+      {
+        "@id": "https://www.jmillanacosta.com/retractable/schema#RetractedPaper"
+      }
+    ]
+  },
+  {
+    "@id": "https://www.jmillanacosta.com/retractable/retractable#b52683e1",
+    "@type": [
+      "https://www.jmillanacosta.com/retractable/schema#RetractedPaper"
+    ],
+    "http://purl.org/dc/elements/1.1/creator": [
+      {
+        "@value": "['Lambert, PW', 'DeOreo, PB', 'Hollis, BW', 'Fu, IY', 'Ginsberg, DJ', 'Roos, BA']"
+      }
+    ],
+    "http://purl.org/dc/elements/1.1/date": [
+      {
+        "@value": "1981-10-01"
+      }
+    ],
+    "http://purl.org/dc/elements/1.1/description": [
+      {
+        "@value": "Retracted Publication; Research Support, U.S. Gov't, P.H.S.; Research Support, Non-U.S. Gov't; Research Support, U.S. Gov't, Non-P.H.S.; Journal Article"
+      }
+    ],
+    "http://purl.org/dc/elements/1.1/identifier": [
+      {
+        "@value": "http://europepmc.org/abstract/MED/6270222"
+      }
+    ],
+    "http://purl.org/dc/elements/1.1/language": [
+      {
+        "@value": "eng"
+      }
+    ],
+    "http://purl.org/dc/elements/1.1/subject": [
+      {
+        "@value": "Nephrectomy"
+      }
+    ],
+    "http://purl.org/dc/elements/1.1/title": [
+      {
+        "@value": "Concurrent measurement of plasma levels of vitamin D3 and five of its metabolites in normal humans, chronic renal failure patients, and anephric subjects."
+      }
+    ],
+    "http://purl.org/dc/elements/1.1/type": [
+      {
+        "@value": "Text"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#about": [
+      {
+        "@id": "https://www.jmillanacosta.com/retractable/b52683e1"
+      }
+    ],
+    "http://xmlns.com/foaf/0.1/page": [
+      {
+        "@id": "http://europepmc.org/abstract/MED/6270222"
+      }
+    ],
+    "https://www.jmillanacosta.com/retractable/schema#hasRetractionNotice": [
+      {
+        "@id": "https://www.jmillanacosta.com/retractable/f43a5659"
+      }
+    ]
+  },
+  {
+    "@id": "https://www.jmillanacosta.com/retractable/retractable#f43a5659",
+    "@type": [
+      "https://www.jmillanacosta.com/retractable/schema#RetractionNotice"
+    ],
+    "http://purl.org/dc/elements/1.1/creator": [
+      {
+        "@value": "['Lambert, PW', 'DeOreo, PB', 'Hollis, B', 'Fu, IY', 'Ginsberg, DJ', 'Roos, B', 'Behrman, RE']"
+      }
+    ],
+    "http://purl.org/dc/elements/1.1/date": [
+      {
+        "@value": "1984-10-01"
+      }
+    ],
+    "http://purl.org/dc/elements/1.1/description": [
+      {
+        "@value": "Retraction of Publication"
+      }
+    ],
+    "http://purl.org/dc/elements/1.1/identifier": [
+      {
+        "@value": "http://europepmc.org/abstract/MED/6384395"
+      }
+    ],
+    "http://purl.org/dc/elements/1.1/language": [
+      {
+        "@value": "eng"
+      }
+    ],
+    "http://purl.org/dc/elements/1.1/title": [
+      {
+        "@value": "Retraction: Concurrent measurements of plasma levels of vitamin D3 and five of its metabolites in normal humans, chronic renal failure patients, and anephric subjects."
+      }
+    ],
+    "http://purl.org/dc/elements/1.1/type": [
+      {
+        "@value": "Text"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#about": [
+      {
+        "@id": "https://www.jmillanacosta.com/retractable/f43a5659"
+      }
+    ],
+    "http://xmlns.com/foaf/0.1/page": [
+      {
+        "@id": "http://europepmc.org/abstract/MED/6384395"
+      }
+    ],
+    "https://www.jmillanacosta.com/retractable/schema#isRetractionNoticeOf": [
+      {
+        "@id": "https://www.jmillanacosta.com/retractable/b52683e1"
+      }
+    ]
+  },
+  {
+    "@id": "https://www.jmillanacosta.com/retractable/schema#hasRetractionNotice",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "Relates a retracted paper to its retraction notice."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "https://www.jmillanacosta.com/retractable/schema#RetractedPaper"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "has retraction notice"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "https://www.jmillanacosta.com/retractable/schema#RetractionNotice"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#inverseOf": [
+      {
+        "@id": "https://www.jmillanacosta.com/retractable/schema#isRetractionNoticeOf"
+>>>>>>> 29c9f2c674917257ade86bf5fd228fd79c3fd452
       }
     ]
   },
@@ -63,6 +279,7 @@
     ]
   },
   {
+<<<<<<< HEAD
     "@id": "https://www.jmillanacosta.com/retractable/schema#RetractionReason",
     "@type": [
       "http://www.w3.org/2002/07/owl#Class"
@@ -85,6 +302,15 @@
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
         "@value": "retraction reason"
+=======
+    "@id": "http://purl.org/spar/citoretracts",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "retracts"
+>>>>>>> 29c9f2c674917257ade86bf5fd228fd79c3fd452
       }
     ]
   },
@@ -108,7 +334,11 @@
         "@id": "https://www.jmillanacosta.com/retractable/schema#Paper"
       },
       {
+<<<<<<< HEAD
         "@id": "_:nc38b1981cbdd4fe99d012550e150ccd3b1"
+=======
+        "@id": "_:na232ff1bf10f4033a9d5918ba9e817c2b1"
+>>>>>>> 29c9f2c674917257ade86bf5fd228fd79c3fd452
       }
     ],
     "http://www.w3.org/2002/07/owl#sameAs": [
@@ -118,7 +348,11 @@
     ]
   },
   {
+<<<<<<< HEAD
     "@id": "_:nc38b1981cbdd4fe99d012550e150ccd3b1",
+=======
+    "@id": "_:na232ff1bf10f4033a9d5918ba9e817c2b1",
+>>>>>>> 29c9f2c674917257ade86bf5fd228fd79c3fd452
     "@type": [
       "http://www.w3.org/2002/07/owl#Restriction"
     ],
@@ -134,6 +368,7 @@
     ]
   },
   {
+<<<<<<< HEAD
     "@id": "https://www.jmillanacosta.com/retractable/schema#RetractionNotice",
     "@type": [
       "http://www.w3.org/2002/07/owl#Class"
@@ -203,6 +438,8 @@
     ]
   },
   {
+=======
+>>>>>>> 29c9f2c674917257ade86bf5fd228fd79c3fd452
     "@id": "http://purl.obolibrary.org/oboRO_0002410",
     "@type": [
       "http://www.w3.org/2002/07/owl#Class"
@@ -245,6 +482,7 @@
     ]
   },
   {
+<<<<<<< HEAD
     "@id": "https://www.jmillanacosta.com/retractable/schema#hasRetractionNotice",
     "@type": [
       "http://www.w3.org/2002/07/owl#ObjectProperty"
@@ -255,10 +493,23 @@
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#domain": [
+=======
+    "@id": "https://www.jmillanacosta.com/retractable/schema#RetractionReason",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://purl.org/spar/citoisConfirmedBy": [
+      {
+        "@id": "https://www.jmillanacosta.com/retractable/schema#Retraction"
+      }
+    ],
+    "http://purl.org/spar/citorefutes": [
+>>>>>>> 29c9f2c674917257ade86bf5fd228fd79c3fd452
       {
         "@id": "https://www.jmillanacosta.com/retractable/schema#RetractedPaper"
       }
     ],
+<<<<<<< HEAD
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
         "@value": "has retraction notice"
@@ -272,17 +523,35 @@
     "http://www.w3.org/2002/07/owl#inverseOf": [
       {
         "@id": "https://www.jmillanacosta.com/retractable/schema#isRetractionNoticeOf"
+=======
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "(one of) the reason(s) stated for retraction"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "retraction reason"
+>>>>>>> 29c9f2c674917257ade86bf5fd228fd79c3fd452
       }
     ]
   },
   {
+<<<<<<< HEAD
     "@id": "http://purl.org/spar/citoretracts",
+=======
+    "@id": "http://purl.org/spar/citoconfirms",
+>>>>>>> 29c9f2c674917257ade86bf5fd228fd79c3fd452
     "@type": [
       "http://www.w3.org/2002/07/owl#Class"
     ],
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
+<<<<<<< HEAD
         "@value": "retracts"
+=======
+        "@value": "confirms"
+>>>>>>> 29c9f2c674917257ade86bf5fd228fd79c3fd452
       }
     ]
   }
