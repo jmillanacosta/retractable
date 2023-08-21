@@ -16,19 +16,12 @@ def make_request(url):
     except requests.exceptions.RequestException as e:
         print(f"An error occurred while making the request: {e}")
         return None
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-        return None
 
 def get_retraction_info(article_url, source, id):
     try:
         print(f'Fetching retraction data for {source}{id}')
         article_url_i = article_url.format(source, id, 'json')
-        try:
-            article_retract = make_request(article_url_i).json().get('result', {}).get("commentCorrectionList", {}).get("commentCorrection", [])[0]
-        except AttributeError as e:
-            print(f'Skipping item {source}{id} due to {e}')
-            return None
+        article_retract = make_request(article_url_i).json().get('result', {}).get("commentCorrectionList", {}).get("commentCorrection", [])[0]
         retract_id = article_retract.get('id', 'NA')
         retract_source = article_retract.get('source', 'NA')
         retraction_url = article_url.format(retract_source, retract_id, 'dc')
@@ -50,9 +43,8 @@ def get_retracted_articles_epmc(query_url, article_url):
     response = make_request(url)
     if response is None:
         raise requests.exceptions.InvalidURL
-    o = xmltodict.parse(response.text)
-    dict_response = o['responseWrapper']
 
+    dict_response = xmltodict.parse(response.text)['responseWrapper']
     total = int(dict_response.get('hitCount', 0))
     num_requests = (total + page_size) // page_size + 1
 
@@ -67,39 +59,27 @@ def get_retracted_articles_epmc(query_url, article_url):
             response = make_request(url)
             if response is None:
                 continue
-            o = xmltodict.parse(response.text)
-            dict_response = o['responseWrapper']
-            if dict_response != None:
+            dict_response = xmltodict.parse(response.text)['responseWrapper']
+            if dict_response is None:
+                continue
+
+            results = dict_response.get('rdf:RDF', {}).get('rdf:Description', [])
+            for j, item in enumerate(results):
                 try:
-                    result = dict_response.get('rdf:RDF', {}).get('rdf:Description', [])
-                except AttributeError as e:
-                    print(f'Skipping item due to {e}')
-                    continue
+                    if 'dcterms:abstract' in item:
+                        item.pop('dcterms:abstract')
 
-                for item in result:
-                    try:
-                        if 'dcterms:abstract' in item.keys():
-                            item.pop('dcterms:abstract')
+                    source = item['@rdf:about'].split('/', 4)[-1].split('/')[0]
+                    id = item['@rdf:about'].split('/', 4)[-1].split('/')[1]
+                    futures.append(executor.submit(get_retraction_info, article_url, source, id))
 
-                        source = item['@rdf:about'].split('/', 4)[-1].split('/')[0]
-                        id = item['@rdf:about'].split('/', 4)[-1].split('/')[1]
-                        futures.append(executor.submit(get_retraction_info,article_url, source, id))
-                        
-                    except Exception as e:
-                        print(f"Skipping item due to {e}")
-        j = 0
-        for future in futures:
-            if future.result():
-                print(f'Processing retraction number {j}')
-                j+=1
-                retraction = future.result()
-                print(retraction)
-                if retraction:
-                    item = {}
-                    item['retraction'] = retraction
-                    retracted_articles_epmc.append(item)
-                else:
-                    print(f'\t\t\t\t\t -- no retraction', end='\r')
-                    print("\n")
+                except Exception as e:
+                    print(f"Skipping item due to {e}")
+
+        for j, future in enumerate(futures):
+            retraction = future.result()
+            if retraction:
+                article_info = results[j]  # Get the corresponding article info
+                retracted_articles_epmc.append((article_info, retraction))
 
     return retracted_articles_epmc
