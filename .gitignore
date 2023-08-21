@@ -1,3 +1,6 @@
 data/retracts.json
 data/ePMC/retracts.json
 src/main/tests.ipynb
+src/main/__pycache__/collate.cpython-39.pyc
+src/main/__pycache__/get_epmc.cpython-39.pyc
+src/main/__pycache__/to_rdf_epmc.cpython-39.pyc

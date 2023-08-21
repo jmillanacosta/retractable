@@ -31,6 +31,7 @@ def load_json(source):
         list: A list containing the loaded JSON data.
     """
     try:
+        print(f'Loading {source}')
         with open(f'data/{source}/retracts.json', 'r') as f:
             json_source = json.load(f)
     except FileNotFoundError:

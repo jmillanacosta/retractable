@@ -74,16 +74,11 @@ def main():
 
     elif args.command == "RDF":
         uri_file = config.get('uri_file')
-        try:
-            json_all = load_json('data/data.json')
-        except FileNotFoundError:
-            logging.error('No data to RDFy - fetch data first')
         for source in args.sources:
             if source in config['sources']:
-                if source == 'epmc':
-                    
-                    make_rdf_epmc(json_all, uri_file)
-
+                if source == 'epmc': #need to expand, improve this
+                    json_epmc = load_json(source)
+                    make_rdf_epmc(json_epmc, uri_file)
                 else:
                     logging.error(f'{source} is in the config file but not allowed.')
             else:

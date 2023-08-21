@@ -23,7 +23,7 @@ retrct_terms:Retraction a owl:Class ;
 retrct_terms:Paper a owl:Class ;
     rdfs:label "Paper" ;
     rdfs:subClassOf dcterms:BibliographicResource ;
-    rdfs:comment "A research paper or academic journal article." .
+    rdfs:comment "A research paper or academic journal article." ;
     owl:sameAs wd:Q18918145 .
 
 retrct_terms:RetractedPaper a owl:Class ;
@@ -47,7 +47,7 @@ retrct_terms:RetractionNotice a owl:Class ;
         a owl:Restriction ;
         owl:onProperty cito:confirms: ;
         owl:someValuesFrom retrct_terms:Retraction ;
-    ] .
+    ] ;
     rdfs:subClassOf [
         a owl:Restriction ;
         owl:onProperty retrct_terms:isRetractionNoticeOf: ;
