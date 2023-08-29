@@ -1,115 +1,12 @@
 [
   {
-    "@id": "https://www.jmillanacosta.com/retractable/schema#RetractedPaper",
+    "@id": "http://purl.org/spar/citoretracts",
     "@type": [
       "http://www.w3.org/2002/07/owl#Class"
     ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@value": "A paper that has been retracted."
-      }
-    ],
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
-        "@value": "Retracted Paper"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
-      {
-        "@id": "https://www.jmillanacosta.com/retractable/schema#Paper"
-      },
-      {
-        "@id": "_:nc308ee8be16c498fa25a85ea3fb805a6b1"
-      }
-    ],
-    "http://www.w3.org/2002/07/owl#sameAs": [
-      {
-        "@id": "http://www.wikidata.org/entity/Q45182324"
-      }
-    ]
-  },
-  {
-    "@id": "_:nc308ee8be16c498fa25a85ea3fb805a6b1",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#Restriction"
-    ],
-    "http://www.w3.org/2002/07/owl#onProperty": [
-      {
-        "@id": "https://www.jmillanacosta.com/retractable/schema#hasRetractionNotice"
-      }
-    ],
-    "http://www.w3.org/2002/07/owl#someValuesFrom": [
-      {
-        "@id": "https://www.jmillanacosta.com/retractable/schema#RetractionNotice"
-      }
-    ]
-  },
-  {
-    "@id": "https://www.jmillanacosta.com/retractable/schema#RetractionNotice",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#Class"
-    ],
-    "http://purl.org/spar/citodiscusses": [
-      {
-        "@id": "https://www.jmillanacosta.com/retractable/schema#Retraction"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@value": "A notice indicating the retraction of a paper."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@value": "Retraction Notice"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
-      {
-        "@id": "http://purl.org/dc/terms/BibliographicResource"
-      },
-      {
-        "@id": "_:nc308ee8be16c498fa25a85ea3fb805a6b2"
-      },
-      {
-        "@id": "_:nc308ee8be16c498fa25a85ea3fb805a6b3"
-      }
-    ],
-    "http://www.w3.org/2002/07/owl#sameAs": [
-      {
-        "@id": "http://www.wikidata.org/entity/Q7316896"
-      }
-    ]
-  },
-  {
-    "@id": "_:nc308ee8be16c498fa25a85ea3fb805a6b2",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#Restriction"
-    ],
-    "http://www.w3.org/2002/07/owl#onProperty": [
-      {
-        "@id": "http://purl.org/spar/citoconfirms:"
-      }
-    ],
-    "http://www.w3.org/2002/07/owl#someValuesFrom": [
-      {
-        "@id": "https://www.jmillanacosta.com/retractable/schema#Retraction"
-      }
-    ]
-  },
-  {
-    "@id": "_:nc308ee8be16c498fa25a85ea3fb805a6b3",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#Restriction"
-    ],
-    "http://www.w3.org/2002/07/owl#onProperty": [
-      {
-        "@id": "https://www.jmillanacosta.com/retractable/schema#isRetractionNoticeOf:"
-      }
-    ],
-    "http://www.w3.org/2002/07/owl#someValuesFrom": [
-      {
-        "@id": "https://www.jmillanacosta.com/retractable/schema#RetractedPaper"
+        "@value": "retracts"
       }
     ]
   },
@@ -125,80 +22,13 @@
     ]
   },
   {
-    "@id": "https://www.jmillanacosta.com/retractable/schema#RetractionReason",
+    "@id": "http://purl.org/spar/citoconfirms",
     "@type": [
       "http://www.w3.org/2002/07/owl#Class"
     ],
-    "http://purl.org/spar/citoisConfirmedBy": [
-      {
-        "@id": "https://www.jmillanacosta.com/retractable/schema#Retraction"
-      }
-    ],
-    "http://purl.org/spar/citorefutes": [
-      {
-        "@id": "https://www.jmillanacosta.com/retractable/schema#RetractedPaper"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@value": "(one of) the reason(s) stated for retraction"
-      }
-    ],
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
-        "@value": "retraction reason"
-      }
-    ]
-  },
-  {
-    "@id": "https://www.jmillanacosta.com/retractable/schema#Retraction",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#Class"
-    ],
-    "http://purl.org/spar/citoconfirms": [
-      {
-        "@id": "https://www.jmillanacosta.com/retractable/schema#Retraction"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@value": "A retraction is the cause of a paper being retracted. Not all retractions involve or can be linked to retraction notices."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@value": "Retraction"
-      }
-    ],
-    "http://www.w3.org/2002/07/owl#sameAs": [
-      {
-        "@id": "http://www.wikidata.org/entity/Q45203135"
-      }
-    ]
-  },
-  {
-    "@id": "https://www.jmillanacosta.com/retractable/schema#Paper",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#Class"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@value": "A research paper or academic journal article."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@value": "Paper"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
-      {
-        "@id": "http://purl.org/dc/terms/BibliographicResource"
-      }
-    ],
-    "http://www.w3.org/2002/07/owl#sameAs": [
-      {
-        "@id": "http://www.wikidata.org/entity/Q18918145"
+        "@value": "confirms"
       }
     ]
   },
@@ -265,24 +95,194 @@
     ]
   },
   {
-    "@id": "http://purl.org/spar/citoconfirms",
+    "@id": "https://www.jmillanacosta.com/retractable/schema#Paper",
     "@type": [
       "http://www.w3.org/2002/07/owl#Class"
     ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "A research paper or academic journal article."
+      }
+    ],
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
-        "@value": "confirms"
+        "@value": "Paper"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "http://purl.org/dc/terms/BibliographicResource"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#sameAs": [
+      {
+        "@id": "http://www.wikidata.org/entity/Q18918145"
       }
     ]
   },
   {
-    "@id": "http://purl.org/spar/citoretracts",
+    "@id": "https://www.jmillanacosta.com/retractable/schema#RetractionNotice",
     "@type": [
       "http://www.w3.org/2002/07/owl#Class"
     ],
+    "http://purl.org/spar/citodiscusses": [
+      {
+        "@id": "https://www.jmillanacosta.com/retractable/schema#Retraction"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "A notice indicating the retraction of a paper."
+      }
+    ],
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
-        "@value": "retracts"
+        "@value": "Retraction Notice"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "http://purl.org/dc/terms/BibliographicResource"
+      },
+      {
+        "@id": "_:nd2572bbb4d9b409486164040384a6558b2"
+      },
+      {
+        "@id": "_:nd2572bbb4d9b409486164040384a6558b3"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#sameAs": [
+      {
+        "@id": "http://www.wikidata.org/entity/Q7316896"
+      }
+    ]
+  },
+  {
+    "@id": "_:nd2572bbb4d9b409486164040384a6558b2",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Restriction"
+    ],
+    "http://www.w3.org/2002/07/owl#onProperty": [
+      {
+        "@id": "http://purl.org/spar/citoconfirms:"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#someValuesFrom": [
+      {
+        "@id": "https://www.jmillanacosta.com/retractable/schema#Retraction"
+      }
+    ]
+  },
+  {
+    "@id": "_:nd2572bbb4d9b409486164040384a6558b3",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Restriction"
+    ],
+    "http://www.w3.org/2002/07/owl#onProperty": [
+      {
+        "@id": "https://www.jmillanacosta.com/retractable/schema#isRetractionNoticeOf:"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#someValuesFrom": [
+      {
+        "@id": "https://www.jmillanacosta.com/retractable/schema#RetractedPaper"
+      }
+    ]
+  },
+  {
+    "@id": "https://www.jmillanacosta.com/retractable/schema#RetractedPaper",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "A paper that has been retracted."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Retracted Paper"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "https://www.jmillanacosta.com/retractable/schema#Paper"
+      },
+      {
+        "@id": "_:nd2572bbb4d9b409486164040384a6558b1"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#sameAs": [
+      {
+        "@id": "http://www.wikidata.org/entity/Q45182324"
+      }
+    ]
+  },
+  {
+    "@id": "_:nd2572bbb4d9b409486164040384a6558b1",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Restriction"
+    ],
+    "http://www.w3.org/2002/07/owl#onProperty": [
+      {
+        "@id": "https://www.jmillanacosta.com/retractable/schema#hasRetractionNotice"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#someValuesFrom": [
+      {
+        "@id": "https://www.jmillanacosta.com/retractable/schema#RetractionNotice"
+      }
+    ]
+  },
+  {
+    "@id": "https://www.jmillanacosta.com/retractable/schema#RetractionReason",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://purl.org/spar/citoisConfirmedBy": [
+      {
+        "@id": "https://www.jmillanacosta.com/retractable/schema#Retraction"
+      }
+    ],
+    "http://purl.org/spar/citorefutes": [
+      {
+        "@id": "https://www.jmillanacosta.com/retractable/schema#RetractedPaper"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "(one of) the reason(s) stated for retraction"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "retraction reason"
+      }
+    ]
+  },
+  {
+    "@id": "https://www.jmillanacosta.com/retractable/schema#Retraction",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://purl.org/spar/citoconfirms": [
+      {
+        "@id": "https://www.jmillanacosta.com/retractable/schema#Retraction"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@value": "A retraction is the cause of a paper being retracted. Not all retractions involve or can be linked to retraction notices."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Retraction"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#sameAs": [
+      {
+        "@id": "http://www.wikidata.org/entity/Q45203135"
       }
     ]
   }
