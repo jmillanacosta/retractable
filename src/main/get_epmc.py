@@ -62,12 +62,16 @@ def get_retracted_articles_epmc(query_url, article_url):
             dict_response = xmltodict.parse(response.text)['responseWrapper']
             if dict_response is None:
                 continue
-
-            results = dict_response.get('rdf:RDF', {}).get('rdf:Description', [])
+            try:
+                results = dict_response.get('rdf:RDF', {}).get('rdf:Description', [])
+            except Exception as e:
+                print(f'Skipping item due to {e}')
+                continue
             for j, item in enumerate(results):
                 try:
                     if 'dcterms:abstract' in item:
                         item.pop('dcterms:abstract')
+                        # Get retraction reason here? TODO
 
                     source = item['@rdf:about'].split('/', 4)[-1].split('/')[0]
                     id = item['@rdf:about'].split('/', 4)[-1].split('/')[1]
@@ -75,6 +79,7 @@ def get_retracted_articles_epmc(query_url, article_url):
 
                 except Exception as e:
                     print(f"Skipping item due to {e}")
+                    continue
 
         for j, future in enumerate(futures):
             retraction = future.result()
