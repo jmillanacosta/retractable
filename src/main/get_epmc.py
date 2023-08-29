@@ -84,7 +84,10 @@ def get_retracted_articles_epmc(query_url, article_url):
         for j, future in enumerate(futures):
             retraction = future.result()
             if retraction:
-                article_info = results[j]  # Get the corresponding article info
-                retracted_articles_epmc.append((article_info, retraction))
-
+                try:
+                    article_info = results[j]  # Get the corresponding article info
+                    retracted_articles_epmc.append((article_info, retraction))
+                except Exception as e:
+                    print(f"Skipping item due to {e}")
+                    continue
     return retracted_articles_epmc
