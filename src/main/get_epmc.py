@@ -33,7 +33,7 @@ def get_retraction_info(article_url, source, id):
             if retraction is not None:
                 return retraction
     except Exception as e:
-        print(f"No retraction for {source}{id}: {e}")
+        print(f"No retraction data for {source}{id}: {e}")
     return None
 
 def get_retracted_articles_epmc(query_url, article_url):
@@ -65,7 +65,7 @@ def get_retracted_articles_epmc(query_url, article_url):
             try:
                 results = dict_response.get('rdf:RDF', {}).get('rdf:Description', [])
             except Exception as e:
-                print(f'Skipping item due to {e}')
+                print(f'Skipping request number {i} due to {e}')
                 continue
             for j, item in enumerate(results):
                 try:
@@ -78,16 +78,21 @@ def get_retracted_articles_epmc(query_url, article_url):
                     futures.append(executor.submit(get_retraction_info, article_url, source, id))
 
                 except Exception as e:
-                    print(f"Skipping item due to {e}")
+                    print(f"Could not retrieve an id for request {i} item {j}: {e}")
                     continue
+            
 
-        for j, future in enumerate(futures):
-            retraction = future.result()
-            if retraction:
-                try:
-                    article_info = results[j]  # Get the corresponding article info
-                    retracted_articles_epmc.append((article_info, retraction))
-                except Exception as e:
-                    print(f"Skipping item due to {e}")
-                    continue
+    for j, future in enumerate(futures):
+        retraction = future.result()
+        if retraction:
+            try:
+                if future is None:
+                    print(f"Skipping retraction data for item {j} due to previous exception")
+                    continue  
+                print('Appe')
+                article_info = results[j]  # Get the corresponding article info
+                retracted_articles_epmc.append((article_info, retraction))
+            except Exception as e:
+                print(f"Could not retrieve a retraction {e}")
+                continue
     return retracted_articles_epmc
