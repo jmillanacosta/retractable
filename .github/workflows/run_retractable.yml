@@ -31,8 +31,9 @@ jobs:
       - name: Commit and Push Changes
         run: |
           cd data/
+          git pull
           git add .
-      
+    
           # Check if there are changes to commit
           if git diff-index --quiet HEAD --; then
             echo "No changes to commit."
@@ -78,6 +79,7 @@ jobs:
         run: |
       - name: Commit and Push Changes
         run: |
+          git pull
           cp data/rdf/retractable.ttl docs/rdf/retractable.ttl
           git add data/retractable.jsonld docs/rdf/retractable.ttl data/uris/uris.csv data/rdf/* data/uris/uris.csv
           git config --local user.email "action@github.com"
