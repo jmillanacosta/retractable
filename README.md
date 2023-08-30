@@ -57,7 +57,6 @@ If you use the data, please cite also the sources:
 	journaltitle = {Nucleic acids research},
 	shortjournal = {Nucleic Acids Res},
 	author = {Ferguson, Christine and Araújo, Dayane and Faulk, Lynne and Gou, Yuci and Hamelers, Audrey and Huang, Zhan and Ide-Smith, Michele and Levchenko, Maria and Marinos, Nikos and Nambiar, Rakesh and Nassar, Maaly and Parkin, Michael and Pi, Xingjun and Rahman, Faisal and Rogers, Frances and Roochun, Yogmatee and Saha, Shyamasree and Selim, Mohamed and Shafique, Zunaira and Sharma, Shrey and Stephenson, David and Talo', Francesco and Thouvenin, Arthur and Tirunagari, Santosh and Vartak, Vid and Venkatesan, Aravind and Yang, Xiao and {McEntyre}, Johanna},
-	urldate = {2023-08-07},
 	date = {2021-01-01},
 	pmid = {33180112},
 	pmcid = {PMC7778976},
