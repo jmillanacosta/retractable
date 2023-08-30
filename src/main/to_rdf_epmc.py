@@ -5,7 +5,6 @@ import json
 from rdflib import Graph, RDF, RDFS, FOAF, DC, Namespace, URIRef, Literal, OWL, DCTERMS
 from rdflib.serializer import Serializer
 
-
 def generate_uris(original_uri, existent_uris_file):
     # Load existing URIs DataFrame from the file
     try:
@@ -24,17 +23,17 @@ def generate_uris(original_uri, existent_uris_file):
         # Generate a unique hash for the original URI using SHA-256
         hash_value = hashlib.sha256(original_uri.encode()).hexdigest()
 
-        # Append the original URI to the hash to increase uniqueness
-        unique_hash_value = f"{hash_value}{original_uri}"
+        # Convert the hexadecimal hash value to an integer
+        int_hash = int(hash_value, 16)
 
-        # Take the first 8 characters from the hash as the identifier
-        uri_identifier = unique_hash_value[:8]
+        # Convert the integer hash to a digit-containing format with zero padding
+        digit_hash = f"{int_hash:06d}"
 
         # Ensure the identifier is unique by appending a numeric suffix if necessary
+        uri_identifier = digit_hash[0:6]
         count = 1
         while uri_identifier in set(existent_uris['uri']):
-            print('aa')
-            uri_identifier = f"{unique_hash_value[:7]}{count:02d}"
+            uri_identifier = f"{digit_hash[:-1]}{count:02d}"
             count += 1
 
         # Add new URI information to the DataFrame
@@ -46,6 +45,7 @@ def generate_uris(original_uri, existent_uris_file):
         print(f'Len{len(existent_uris)}')
 
         return uri_identifier
+
 
 
 
@@ -74,7 +74,6 @@ def make_rdf_epmc(input_json, existent_uri_file):
     g.parse(source='data/rdf/classes.ttl', format='turtle')
     i=0
     for item in input_json:
-        print(item)
         try:
             about = item.get("@rdf:about")
             seen.append(about)
@@ -82,7 +81,6 @@ def make_rdf_epmc(input_json, existent_uri_file):
                 continue
             # Assign an internal identifier to "@rdf:about" field
             new_id = generate_uris(about, existent_uri_file)
-            print(about)
 
             # Add the original value of "@rdf:about" as foaf:page
             foaf_page = about

@@ -47,9 +47,10 @@ def get_retracted_articles_epmc(query_url, article_url):
     dict_response = xmltodict.parse(response.text)['responseWrapper']
     total = int(dict_response.get('hitCount', 0))
     num_requests = (total + page_size) // page_size + 1
-
+    results = []
     with ThreadPoolExecutor() as executor:
         futures = []
+        
         for i in range(num_requests):
             cursor_mark = dict_response.get('nextCursorMark')
             if cursor_mark is None:
@@ -63,36 +64,43 @@ def get_retracted_articles_epmc(query_url, article_url):
             if dict_response is None:
                 continue
             try:
-                results = dict_response.get('rdf:RDF', {}).get('rdf:Description', [])
+                a = dict_response.get('rdf:RDF', {}).get('rdf:Description', [])
+                print(f'DEBUG {type(a)}')
+                results.extend(dict_response.get('rdf:RDF', {}).get('rdf:Description', []))
             except Exception as e:
                 print(f'Skipping request number {i} due to {e}')
                 continue
-            for j, item in enumerate(results):
-                try:
-                    if 'dcterms:abstract' in item:
-                        item.pop('dcterms:abstract')
-                        # Get retraction reason here? TODO
+        for j in range(len((results))):
+            item = results[j]
+            try:
+                if 'dcterms:abstract' in item:
+                    item.pop('dcterms:abstract')
+                    # Get retraction reason here? TODO
 
-                    source = item['@rdf:about'].split('/', 4)[-1].split('/')[0]
-                    id = item['@rdf:about'].split('/', 4)[-1].split('/')[1]
-                    futures.append(executor.submit(get_retraction_info, article_url, source, id))
+                source = item['@rdf:about'].split('/', 4)[-1].split('/')[0]
+                id = item['@rdf:about'].split('/', 4)[-1].split('/')[1]
+                  
+                futures.append(executor.submit(get_retraction_info, article_url, source, id))
 
-                except Exception as e:
-                    print(f"Could not retrieve an id for request {i} item {j}: {e}")
-                    continue
+            except Exception as e:
+                print(f"Could not retrieve an id for request {i} item {j}: {e}")
+                continue
             
-
     for j, future in enumerate(futures):
+        
         retraction = future.result()
         if retraction:
             try:
                 if future is None:
                     print(f"Skipping retraction data for item {j} due to previous exception")
                     continue  
-                print('Appe')
-                article_info = results[j]  # Get the corresponding article info
-                retracted_articles_epmc.append((article_info, retraction))
+                article_info = results[j] # Get the corresponding article info
+                retr =  retraction['@rdf:about']
+                print(f'Appended retraction for {list(article_info.values())[0]}: {retr}')
+                article_info['retraction'] = retraction
+                retracted_articles_epmc.append(article_info)
             except Exception as e:
-                print(f"Could not retrieve a retraction {e}")
+                retracted_articles_epmc.append((article_info, []))
+                print(f"Could not retrieve a retraction: {e} (item {j}) | {future.result()['@rdf:about']} | len retraction notices: {len(futures)}; len retracted articles: {len(results)}")
                 continue
     return retracted_articles_epmc
